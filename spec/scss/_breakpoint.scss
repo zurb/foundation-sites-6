@@ -30,6 +30,20 @@
     @include should(expect($actual), to(be($expected)));
   }
 
+  @include it("creates an exclusive down range out of a named breakpoint") {
+    $actual: breakpoint(medium down-excl);
+    $expected: '(max-width: 39.9375em)';
+
+    @include should(expect($actual), to(be($expected)));
+  }
+
+  @include it("creates an up range using the next breakpoint after a named one") {
+    $actual: breakpoint(medium up-excl);
+    $expected: '(min-width: 64em)';
+
+    @include should(expect($actual), to(be($expected)));
+  }
+
   @include it("creates a down range out of a pixel, rem or em value") {
     $expected: '(max-width: 1em)';
 

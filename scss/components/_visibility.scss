@@ -10,10 +10,8 @@
 /// @param {Keyword} $size - Breakpoint name or screen width to use.
 /// @param {Keyword} $prop [block] - The `display` property to use to un-hide the element.
 @mixin show-for($size, $prop: block) {
-  display: none !important;
-
-  @include breakpoint($size) {
-    display: $prop !important;
+  @include breakpoint($size down-excl) {
+    display: none !important;
   }
 }
 
@@ -21,10 +19,8 @@
 /// @param {Keyword} $size - Breakpoint name to use.
 /// @param {Keyword} $prop [block] - The `display` property to use to un-hide the element.
 @mixin show-for-only($size, $prop: block) {
-  display: none !important;
-
-  @include breakpoint($size only) {
-    display: $prop !important;
+  @include breakpoint($size down-excl, $size up-excl) {
+    display: none !important;
   }
 }
 

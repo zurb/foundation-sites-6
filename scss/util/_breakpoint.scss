@@ -58,7 +58,14 @@ $breakpoint-classes: (small medium large) !default;
         }
       }
 
-      $bp: map-get($breakpoints, $bp);
+      @if $dir == 'up-excl' {
+        $bp: -zf-map-next($breakpoints, $bp);
+        $dir: 'up';
+      }
+      @else {
+        $bp: map-get($breakpoints, $bp);
+      }
+
       $named: true;
     }
     @else {
@@ -70,6 +77,13 @@ $breakpoint-classes: (small medium large) !default;
   $bp: -zf-bp-to-em($bp);
   @if $bp-max {
     $bp-max: -zf-bp-to-em($bp-max) - (1/16);
+  }
+
+  // 'down-excl' is a special modifier excludes the range of a named breakpoint
+  @if $dir == 'down-excl' {
+    $bp: $bp - (1/16);
+    $dir: 'down';
+    $named: false;
   }
 
   // Skip media query creation if the input is "0 up" or "0 down"
@@ -92,7 +106,6 @@ $breakpoint-classes: (small medium large) !default;
     @else if $dir == 'down' {
       $max: 0;
 
-      // For named breakpoints, subtract the breakpoint value by one "pixel", or 1/16em.
       @if $named {
         $max: $bp-max;
       }
