@@ -48,7 +48,7 @@ gulp.task('build', function(done) {
 
 // Starts a BrowerSync instance
 gulp.task('server', ['build'], function() {
-  browser.init({server: './_build', port: '3000'});
+  browser.init({server: './_build', port: '3200'});
 });
 
 // Build the site, run the server, and watch for file changes

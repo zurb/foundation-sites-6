@@ -12,11 +12,13 @@
     <!-- uncomment this line ^ to use the motion-ui library -->
   </head>
   <body>
-
+  <div>
+    <!-- Start Top Bar -->
     <div class="top-bar dark">
       <div class="column row">
         <div class="top-bar-left">
           <ul class="menu-bar">
+            <li>Yeti Store</li>
             <li><a href="#">Home</a></li>
             <li><a href="#">About</a></li>
             <li><a href="#">Contact</a></li>
@@ -26,62 +28,164 @@
           <ul class="menu-bar">
             <li><input type="search"></li>
             <li><a href="#" class="button">Search</a></li>
+            <li><a href="#">Cart <span class="badge">2</span></a></li>
           </ul>
         </div>
       </div>
+    </div>
+    <!-- End Top Bar -->
+
+    <!-- You can now combine a row and column if you just need a 12 column row -->
+    <div class="row columns">
+      <nav aria-label="You are here:" role="navigation">
+        <ul class="breadcrumbs">
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Features</a></li>
+          <li class="disabled">Gene Splicing</li>
+          <li>
+            <span class="show-for-sr">Current: </span> Cloning
+          </li>
+        </ul>
+      </nav>
+    </div>
+
+    <div class="row">
+      <div class="medium-6 columns">
+        <p><img class="thumbnail" src="http://placehold.it/650x350"></p>
+        <div class="row small-up-4 show-for-medium">
+          <div class="column">
+            <img class="thumbnail" src="http://placehold.it/250x200">
+          </div>
+          <div class="column">
+            <img class="thumbnail" src="http://placehold.it/250x200">
+          </div>
+          <div class="column">
+            <img class="thumbnail" src="http://placehold.it/250x200">
+          </div>
+          <div class="column">
+            <img class="thumbnail" src="http://placehold.it/250x200">
+          </div>
+        </div>
+      </div>
+      <div class="medium-6 large-5 columns">
+        <h3>My Awesome Product</h3>
+        <p>Nunc eu ullamcorper orci. Quisque eget odio ac lectus vestibulum faucibus eget in metus. In pellentesque faucibus vestibulum. Nulla at nulla justo, eget luctus tortor. Nulla facilisi. Duis aliquet egestas purus in.</p>
+
+        <label>Size
+        <select>
+          <option value="husker">Small</option>
+          <option value="starbuck">Medium</option>
+          <option value="hotdog">Large</option>
+          <option value="apollo">Yeti</option>
+        </select>
+        </label>
+
+        <div class="row">
+          <div class="small-3 columns">
+            <label for="middle-label" class="middle">Quantity</label>
+          </div>
+          <div class="small-9 columns">
+            <input type="text" id="middle-label" placeholder="Right- and middle-aligned text input">
+          </div>
+        </div>
+
+        <a href="#" class="button large expanded">Buy Now</a>
+
+        <div class="small secondary expanded button-group">
+            <a class="button">Small</a>
+            <a class="button">Button</a>
+            <a class="button">Group</a>
+          </div>
+        </div>
     </div>
 
     <div class="column row">
-
-      <h1>Foundation for Sites 6</h1>
-      <p class="lead">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illo repudiandae ullam modi omnis animi harum id sit facere ab.</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sed officia aliquam molestiae alias consequuntur perspiciatis at. Repudiandae quis commodi illo officiis vero vel necessitatibus, ipsa, repellat sit ab expedita maxime.</p>
-
-      <a class="large button">Buy Now</a>
-      <a class="large secondary button">Learn More</a>
-
       <hr>
-
-      <div class="row">
-        <div class="medium-8 columns">
-          <h2>Title</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsam expedita neque laboriosam odio magni explicabo numquam beatae, culpa doloremque, esse nulla, non incidunt exercitationem vitae facere autem nobis distinctio veniam.</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Minima commodi ab explicabo a quisquam fugit impedit dolore nisi. Rerum animi nulla in quo, eum voluptatem eligendi deserunt non et cum.</p>
-          <ul>
-            <li>List item 1</li>
-            <li>List item 2</li>
-            <li>List item 3</li>
-            <li>List item 4</li>
-            <li>List item 5</li>
-          </ul>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Soluta vel modi quod eius porro, quasi temporibus deleniti ad sed eveniet, deserunt numquam earum unde perspiciatis, possimus ipsa aut rem ex.</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Necessitatibus repudiandae ipsam corrupti quis dolorum, quae sapiente itaque ea dignissimos perspiciatis. Sint numquam voluptates illo, nulla, quibusdam voluptatem molestias modi quas.</p>
-          <div class="success callout">
-            <p>Thanks for helping us test Foundation 6!</p>
+      <ul class="tabs" data-tabs id="example-tabs">
+        <li class="tabs-title is-active"><a href="#panel1" aria-selected="true">Reviews</a></li>
+        <li class="tabs-title"><a href="#panel2">Similar Products</a></li>
+      </ul>
+      <div class="tabs-content" data-tabs-content="example-tabs">
+        <div class="tabs-panel is-active" id="panel1">
+          <h4>Reviews</h4>
+          <div class="media-object">
+            <div class="media-object-section">
+              <img class="thumbnail" src="http://placehold.it/200x200">
+            </div>
+            <div class="media-object-section">
+              <h5>Mike Stevenson</h5>
+              <p>I'm going to improvise. Listen, there's something you should know about me... about inception. An idea is like a virus, resilient, highly contagious. The smallest seed of an idea can grow. It can grow to define or destroy you.</p>
+            </div>
           </div>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius repellendus asperiores, at quasi nam dicta, quibusdam sed quae numquam. Ut earum ab corporis laudantium laboriosam unde consequatur nulla. Numquam, atque!</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius repellendus asperiores, at quasi nam dicta, quibusdam sed quae numquam. Ut earum ab corporis laudantium laboriosam unde consequatur nulla. Numquam, atque!</p>
-          <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius repellendus asperiores, at quasi nam dicta, quibusdam sed quae numquam. Ut earum ab corporis laudantium laboriosam unde consequatur nulla. Numquam, atque!</p>
+          <div class="media-object">
+            <div class="media-object-section">
+              <img class="thumbnail" src="http://placehold.it/200x200">
+            </div>
+            <div class="media-object-section">
+              <h5>Mike Stevenson</h5>
+              <p>I'm going to improvise. Listen, there's something you should know about me... about inception. An idea is like a virus, resilient, highly contagious. The smallest seed of an idea can grow. It can grow to define or destroy you</p>
+            </div>
+          </div>
+          <div class="media-object">
+            <div class="media-object-section">
+              <img class="thumbnail" src="http://placehold.it/200x200">
+            </div>
+            <div class="media-object-section">
+              <h5>Mike Stevenson</h5>
+              <p>I'm going to improvise. Listen, there's something you should know about me... about inception. An idea is like a virus, resilient, highly contagious. The smallest seed of an idea can grow. It can grow to define or destroy you</p>
+            </div>
+          </div>
         </div>
-        <div class="medium-4 columns">
-          <div class="callout">
-            <h4>Title</h4>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio ex repellendus nam voluptate necessitatibus ad non vel tempore, obcaecati, numquam atque porro adipisci, maxime iure doloribus! Dolore illo recusandae, earum!</p>
-          </div>
-          <div class="callout">
-            <h4>Title</h4>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio ex repellendus nam voluptate necessitatibus ad non vel tempore, obcaecati, numquam atque porro adipisci, maxime iure doloribus! Dolore illo recusandae, earum!</p>
-          </div>
-          <div class="callout">
-            <h4>Title</h4>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Optio ex repellendus nam voluptate necessitatibus ad non vel tempore, obcaecati, numquam atque porro adipisci, maxime iure doloribus! Dolore illo recusandae, earum!</p>
+        <div class="tabs-panel" id="panel2">
+          <div class="row medium-up-3 large-up-5">
+            <div class="column">
+              <p><img class="thumbnail" src="http://placehold.it/350x200"></p>
+              <h5>Other Product <small>$22</small></h5>
+              <p>In condimentum facilisis porta. Sed nec diam eu diam mattis viverra. Nulla fringilla, orci ac euismod semper, magna diam.</p>
+              <a href="#" class="button hollow tiny expanded">Buy Now</a>
+            </div>
+            <div class="column">
+              <p><img class="thumbnail" src="http://placehold.it/350x200"></p>
+              <h5>Other Product <small>$22</small></h5>
+              <p>In condimentum facilisis porta. Sed nec diam eu diam mattis viverra. Nulla fringilla, orci ac euismod semper, magna diam.</p>
+              <a href="#" class="button hollow tiny expanded">Buy Now</a>
+            </div>
+            <div class="column">
+              <p><img class="thumbnail" src="http://placehold.it/350x200"></p>
+              <h5>Other Product <small>$22</small></h5>
+              <p>In condimentum facilisis porta. Sed nec diam eu diam mattis viverra. Nulla fringilla, orci ac euismod semper, magna diam.</p>
+              <a href="#" class="button hollow tiny expanded">Buy Now</a>
+            </div>
+            <div class="column">
+              <p><img class="thumbnail" src="http://placehold.it/350x200"></p>
+              <h5>Other Product <small>$22</small></h5>
+              <p>In condimentum facilisis porta. Sed nec diam eu diam mattis viverra. Nulla fringilla, orci ac euismod semper, magna diam.</p>
+              <a href="#" class="button hollow tiny expanded">Buy Now</a>
+            </div>
+            <div class="column">
+              <p><img class="thumbnail" src="http://placehold.it/350x200"></p>
+              <h5>Other Product <small>$22</small></h5>
+              <p>In condimentum facilisis porta. Sed nec diam eu diam mattis viverra. Nulla fringilla, orci ac euismod semper, magna diam.</p>
+              <a href="#" class="button hollow tiny expanded">Buy Now</a>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
+    <div class="row column">
+      <hr>
+      <ul class="menu-bar">
+        <li>Yeti Store</li>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Contact</a></li>
+        <li class="float-right">Copyright 2016</li>
+      </ul>
+    </div>
     <script src="js/app.js"></script>
     <!-- <script src='../node_modules/motion-ui/dist/motion-ui.js'></script> -->
     <!-- uncomment this line ^ to use the motion-ui library -->
+  </div>
   </body>
 </html>

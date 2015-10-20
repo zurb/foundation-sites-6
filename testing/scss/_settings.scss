@@ -33,6 +33,8 @@
 //  28. Base Typography
 //  29. Typography Helpers
 
+$medium-gray: #cacaca;
+
 // Abide
 // -----
 
@@ -370,8 +372,8 @@
 
 // $tab-margin: 0;
 // $tab-background: $white;
-// $tab-background-active: $light-gray;
-// $tab-border: $light-gray;
+   $tab-background-active: $medium-gray;
+   $tab-border: $medium-gray;
 // $tab-item-color: foreground($tab-background, $primary-color);
 // $tab-item-background-hover: $white;
 // $tab-item-padding: 1.25rem 1.5rem;
