@@ -33,7 +33,38 @@
 //  28. Base Typography
 //  29. Typography Helpers
 
-$medium-gray: #cacaca;
+// Global
+// ------
+
+// $global-width: rem-calc(1200);
+// $global-font-size: 100%;
+// $global-lineheight: 1.5;
+   $primary-color: #2199e8;
+   $secondary-color: #616373;
+// $success-color: #3adb76;
+// $warning-color: #ffae00;
+// $alert-color: #ec5840;
+   $light-gray: #f5f7f8;
+   $medium-gray: #E6E9EA;
+   $dark-gray: #1A2231;
+   $black: #0a0a0a;
+// $white: #fefefe;
+// $body-background: $white;
+   $body-font-color: lighten($black, 35%);
+// $body-font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
+// $body-antialiased: true;
+// $text-direction: ltr;
+// $global-margin: 1rem;
+// $global-padding: 1rem;
+// $global-margin: 1rem;
+// $global-weight-normal: normal;
+// $global-weight-bold: bold;
+// $global-radius: 3px;
+// $global-rounded: 1000px;
+// $global-namespace: false;
+// $rem-base: 16px;
+
+
 
 // Abide
 // -----
@@ -102,7 +133,7 @@ $medium-gray: #cacaca;
 // $button-background-hover: scale-color($button-background, $lightness: -15%);
 // $button-font-color: #fff;
 // $button-font-color-alt: #000;
-// $button-radius: 0;
+   $button-radius: 3px;
 // $button-sizes: (
 //   tiny: 0.6rem,
 //   small: 0.75rem,
@@ -199,37 +230,6 @@ $medium-gray: #cacaca;
 // $input-cursor-disabled: $cursor-default-value;
 // $input-transition: box-shadow 0.5s, border-color 0.25s ease-in-out;
 // $input-number-spinners: true;
-
-// Global
-// ------
-
-// $global-width: rem-calc(1000);
-// $global-font-size: 100%;
-// $global-lineheight: 1.5;
-// $primary-color: #2199e8;
-// $secondary-color: #777;
-// $success-color: #3adb76;
-// $warning-color: #ffae00;
-// $alert-color: #ec5840;
-// $light-gray: #f3f3f3;
-// $medium-gray: #cacaca;
-// $dark-gray: #8a8a8a;
-// $black: #0a0a0a;
-// $white: #fefefe;
-// $body-background: $white;
-// $body-font-color: $black;
-// $body-font-family: "Helvetica Neue", Helvetica, Roboto, Arial, sans-serif;
-// $body-antialiased: true;
-// $text-direction: ltr;
-// $global-margin: 1rem;
-// $global-padding: 1rem;
-// $global-margin: 1rem;
-// $global-weight-normal: normal;
-// $global-weight-bold: bold;
-// $global-radius: 3px;
-// $global-rounded: 1000px;
-// $global-namespace: false;
-// $rem-base: 16px;
 
 // The Grid
 // --------

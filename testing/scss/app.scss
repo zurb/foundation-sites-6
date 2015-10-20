@@ -2,3 +2,38 @@
 @import '../../scss/foundation';
 
 @include foundation-everything;
+
+// Buttons Styles
+.button {
+
+}
+
+select,input[type="text"] {
+	border-radius: 3px;
+}
+
+// Tabs
+.tabs {
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+	background: $medium-gray;
+}
+.tabs-title > a:hover, .tabs-title > a:focus, .tabs-title > a[aria-selected="true"] {
+	border-bottom: 3px solid $primary-color; 
+}
+
+.tabs-content {
+	background: $light-gray;
+}
+
+.thumbnail {
+	border-radius: 3px;
+}
+
+.top-bar {
+	background: $light-gray;
+	border-bottom: 1px solid $medium-gray;
+	& ul {
+		background: $light-gray;
+	}
+}
