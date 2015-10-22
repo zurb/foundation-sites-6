@@ -64,7 +64,7 @@ $(document).foundation();
 
 
 
-  $('#haha').one('click.zf.joker', function(){
+  $('#haha').on('click.zf.joker', function(){
     var ints = [];
     Array.prototype.forEach.call(zfBtnTTs, function(tt){
       int = setInterval(function(){
