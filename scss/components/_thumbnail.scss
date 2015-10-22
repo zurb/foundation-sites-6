@@ -28,6 +28,7 @@ $thumbnail-transition: box-shadow 200ms ease-out !default;
   box-shadow: $thumbnail-shadow;
   display: inline-block;
   line-height: 0;
+  margin-bottom: 1rem;
   max-width: 100%;
   transition: $thumbnail-transition;
 

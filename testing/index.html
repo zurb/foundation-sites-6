@@ -12,180 +12,119 @@
     <!-- uncomment this line ^ to use the motion-ui library -->
   </head>
   <body>
-  <div>
-    <!-- Start Top Bar -->
-    <div class="top-bar">
-      <div class="column row">
+    <div class="off-canvas position-left reveal-for-large" data-off-canvas>
+      <div class="top-bar dark" id="example-menu">
         <div class="top-bar-left">
-          <ul class="menu-bar">
-            <li>Yeti Store</li>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">About</a></li>
-            <li><a href="#">Contact</a></li>
+          <ul class="drilldown vertical menu-bar" data-drilldown-menu>
+            <li class="menu-bar-text">Site Title</li>
+            <li class="has-submenu">
+              <a href="#">One</a>
+              <ul class="submenu menu-bar vertical" data-submenu>
+                <li><a href="#">One</a></li>
+                <li><a href="#">Two</a></li>
+                <li><a href="#">Three</a></li>
+              </ul>
+            </li>
+            <li><a href="#">Two</a></li>
+            <li><a href="#">Three</a></li>
           </ul>
         </div>
-        <div class="top-bar-right">
-          <ul class="menu-bar">
-            <li><input type="search"></li>
-            <li><a href="#" class="button">Search</a></li>
-            <li><a href="#">Cart <span class="badge">2</span></a></li>
-          </ul>
-        </div>
       </div>
     </div>
-    <!-- End Top Bar -->
 
-    <!-- You can now combine a row and column if you just need a 12 column row -->
-    <div class="row columns">
-      <nav aria-label="You are here:" role="navigation">
-        <ul class="breadcrumbs">
-          <li><a href="#">Home</a></li>
-          <li><a href="#">Features</a></li>
-          <li class="disabled">Gene Splicing</li>
-          <li>
-            <span class="show-for-sr">Current: </span> Cloning
-          </li>
-        </ul>
-      </nav>
-    </div>
-
-    <div class="row">
-      <div class="medium-6 columns">
-        <p><img class="thumbnail" src="http://placehold.it/650x350"></p>
-        <div class="row small-up-4">
-          <div class="column">
-            <img class="thumbnail" src="http://placehold.it/250x200">
-          </div>
-          <div class="column">
-            <img class="thumbnail" src="http://placehold.it/250x200">
-          </div>
-          <div class="column">
-            <img class="thumbnail" src="http://placehold.it/250x200">
-          </div>
-          <div class="column">
-            <img class="thumbnail" src="http://placehold.it/250x200">
+    <div class="main-content" data-off-canvas-content>
+      <!-- Start Top Bar -->
+      <div class="top-bar">
+        <div class="column row">
+          <div class="top-bar-right">
+            <ul class="menu-bar icon-top">
+              <li><a href="#"><i class="fi-list"></i> <span>One</span></a></li>
+              <li><a href="#"><i class="fi-list"></i> <span>Two</span></a></li>
+              <li><a href="#"><i class="fi-list"></i> <span>Three</span></a></li>
+              <li><a href="#"><i class="fi-list"></i> <span>Four</span></a></li>
+            </ul>
           </div>
         </div>
       </div>
-      <div class="medium-6 large-5 columns">
-        <h3>My Awesome Product</h3>
-        <p>Nunc eu ullamcorper orci. Quisque eget odio ac lectus vestibulum faucibus eget in metus. In pellentesque faucibus vestibulum. Nulla at nulla justo, eget luctus tortor. Nulla facilisi. Duis aliquet egestas purus in.</p>
+      <!-- End Top Bar -->
 
-        <label>Size
-        <select>
-          <option value="husker">Small</option>
-          <option value="starbuck">Medium</option>
-          <option value="hotdog">Large</option>
-          <option value="apollo">Yeti</option>
-        </select>
-        </label>
-
-        <div class="row">
-          <div class="small-3 columns">
-            <label for="middle-label" class="middle">Quantity</label>
-          </div>
-          <div class="small-9 columns">
-            <input type="text" id="middle-label" placeholder="Right- and middle-aligned text input">
-          </div>
-        </div>
-
-        <a href="#" class="button large expanded">Buy Now</a>
-
-        <div class="small secondary expanded button-group">
-            <a class="button">Small</a>
-            <a class="button">Button</a>
-            <a class="button">Group</a>
-          </div>
-        </div>
-    </div>
-
-    <div class="column row">
-      <hr>
-      <ul class="tabs" data-tabs id="example-tabs">
-        <li class="tabs-title is-active"><a href="#panel1" aria-selected="true">Reviews</a></li>
-        <li class="tabs-title"><a href="#panel2">Similar Products</a></li>
-      </ul>
-      <div class="tabs-content" data-tabs-content="example-tabs">
-        <div class="tabs-panel is-active" id="panel1">
-          <h4>Reviews</h4>
-          <div class="media-object">
-            <div class="media-object-section">
-              <img class="thumbnail" src="http://placehold.it/200x200">
-            </div>
-            <div class="media-object-section">
-              <h5>Mike Stevenson</h5>
-              <p>I'm going to improvise. Listen, there's something you should know about me... about inception. An idea is like a virus, resilient, highly contagious. The smallest seed of an idea can grow. It can grow to define or destroy you.</p>
-            </div>
-          </div>
-          <div class="media-object">
-            <div class="media-object-section">
-              <img class="thumbnail" src="http://placehold.it/200x200">
-            </div>
-            <div class="media-object-section">
-              <h5>Mike Stevenson</h5>
-              <p>I'm going to improvise. Listen, there's something you should know about me... about inception. An idea is like a virus, resilient, highly contagious. The smallest seed of an idea can grow. It can grow to define or destroy you</p>
-            </div>
-          </div>
-          <div class="media-object">
-            <div class="media-object-section">
-              <img class="thumbnail" src="http://placehold.it/200x200">
-            </div>
-            <div class="media-object-section">
-              <h5>Mike Stevenson</h5>
-              <p>I'm going to improvise. Listen, there's something you should know about me... about inception. An idea is like a virus, resilient, highly contagious. The smallest seed of an idea can grow. It can grow to define or destroy you</p>
+      <div class="row expanded">
+        <div class="medium-4 columns">
+          <div class="callout success">
+            <div class="media-object">
+              <div class="media-object-section">
+                <img src="http://placehold.it/50x50">
+              </div>
+              <div class="media-object-section">
+                <h4>I'm an H3</h4>
+                <div class="stat">128</div>
+              </div>
             </div>
           </div>
         </div>
-        <div class="tabs-panel" id="panel2">
-          <div class="row medium-up-3 large-up-5">
-            <div class="column">
-              <p><img class="thumbnail" src="http://placehold.it/350x200"></p>
-              <h5>Other Product <small>$22</small></h5>
-              <p>In condimentum facilisis porta. Sed nec diam eu diam mattis viverra. Nulla fringilla, orci ac euismod semper, magna diam.</p>
-              <a href="#" class="button hollow tiny expanded">Buy Now</a>
+        <div class="medium-4 columns">
+          <div class="callout alert">
+            <div class="media-object">
+              <div class="media-object-section">
+                <img src="http://placehold.it/50x50">
+              </div>
+              <div class="media-object-section">
+                <h4>I'm an H3</h4>
+                <div class="stat">128</div>
+              </div>
             </div>
-            <div class="column">
-              <p><img class="thumbnail" src="http://placehold.it/350x200"></p>
-              <h5>Other Product <small>$22</small></h5>
-              <p>In condimentum facilisis porta. Sed nec diam eu diam mattis viverra. Nulla fringilla, orci ac euismod semper, magna diam.</p>
-              <a href="#" class="button hollow tiny expanded">Buy Now</a>
-            </div>
-            <div class="column">
-              <p><img class="thumbnail" src="http://placehold.it/350x200"></p>
-              <h5>Other Product <small>$22</small></h5>
-              <p>In condimentum facilisis porta. Sed nec diam eu diam mattis viverra. Nulla fringilla, orci ac euismod semper, magna diam.</p>
-              <a href="#" class="button hollow tiny expanded">Buy Now</a>
-            </div>
-            <div class="column">
-              <p><img class="thumbnail" src="http://placehold.it/350x200"></p>
-              <h5>Other Product <small>$22</small></h5>
-              <p>In condimentum facilisis porta. Sed nec diam eu diam mattis viverra. Nulla fringilla, orci ac euismod semper, magna diam.</p>
-              <a href="#" class="button hollow tiny expanded">Buy Now</a>
-            </div>
-            <div class="column">
-              <p><img class="thumbnail" src="http://placehold.it/350x200"></p>
-              <h5>Other Product <small>$22</small></h5>
-              <p>In condimentum facilisis porta. Sed nec diam eu diam mattis viverra. Nulla fringilla, orci ac euismod semper, magna diam.</p>
-              <a href="#" class="button hollow tiny expanded">Buy Now</a>
+          </div>
+        </div>
+        <div class="medium-4 columns">
+          <div class="callout warning">
+            <div class="media-object">
+              <div class="media-object-section">
+                <img src="http://placehold.it/50x50">
+              </div>
+              <div class="media-object-section">
+                <h4>I'm an H3</h4>
+                <div class="stat">128</div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
 
-    <div class="row column">
-      <hr>
-      <ul class="menu-bar">
-        <li>Yeti Store</li>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">About</a></li>
-        <li><a href="#">Contact</a></li>
-        <li class="float-right">Copyright 2016</li>
-      </ul>
-    </div>
-    <script src="js/app.js"></script>
-    <!-- <script src='../node_modules/motion-ui/dist/motion-ui.js'></script> -->
-    <!-- uncomment this line ^ to use the motion-ui library -->
-  </div>
+      <div class="row column expanded">
+        <div class="callout">
+          <h4>Etiam At Risus Et Justo Dignissim Congue. Donec</h4>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris. Vivamus hendrerit arcu sed erat molestie vehicula. Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor. Ut in nulla enim. Phasellus molestie magna non est bibendum non venenatis nisl tempor. Suspendisse dictum feugiat nisl ut dapibus. Mauris iaculis porttitor posuere. Praesent id metus massa, ut blandit.</p>
+          <p>Odio. Proin quis tortor orci. Etiam at risus et justo dignissim congue. Donec congue lacinia dui, a porttitor lectus condimentum laoreet. Nunc eu ullamcorper orci. Quisque eget odio ac lectus vestibulum faucibus eget in metus. In pellentesque faucibus vestibulum. Nulla at nulla justo, eget luctus tortor. Nulla facilisi. Duis aliquet egestas purus in blandit. Curabitur.</p>
+        </div>
+      </div>
+
+      <div class="row expanded">
+        <div class="medium-6 columns">
+          <div class="callout">
+            <h4>Etiam At Risus Et Justo Dignissim Congue. Donec</h4>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris. Vivamus hendrerit arcu sed erat molestie vehicula. Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor. Ut in nulla enim. Phasellus molestie magna non est bibendum non venenatis nisl tempor. Suspendisse dictum feugiat nisl ut dapibus. Mauris iaculis porttitor posuere. Praesent id metus massa, ut blandit.</p>
+          </div>
+          <div class="callout">
+            <h4>Etiam At Risus Et Justo Dignissim Congue. Donec</h4>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris. Vivamus hendrerit arcu sed erat molestie vehicula. Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor. Ut in nulla enim. Phasellus molestie magna non est bibendum non venenatis nisl tempor. Suspendisse dictum feugiat nisl ut dapibus. Mauris iaculis porttitor posuere. Praesent id metus massa, ut blandit.</p>
+          </div>
+        </div>
+
+        <div class="medium-6 columns">
+          <div class="callout">
+            <h4>Etiam At Risus Et Justo Dignissim Congue. Donec</h4>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris. Vivamus hendrerit arcu sed erat molestie vehicula. Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor. Ut in nulla enim. Phasellus molestie magna non est bibendum non venenatis nisl tempor. Suspendisse dictum feugiat nisl ut dapibus. Mauris iaculis porttitor posuere. Praesent id metus massa, ut blandit.</p>
+          </div>
+          <div class="callout">
+            <h4>Etiam At Risus Et Justo Dignissim Congue. Donec</h4>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam in dui mauris. Vivamus hendrerit arcu sed erat molestie vehicula. Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor. Ut in nulla enim. Phasellus molestie magna non est bibendum non venenatis nisl tempor. Suspendisse dictum feugiat nisl ut dapibus. Mauris iaculis porttitor posuere. Praesent id metus massa, ut blandit.</p>
+          </div>
+        </div>
+      </div>
+
+  <script src="js/app.js"></script>
+  <!-- <script src='../node_modules/motion-ui/dist/motion-ui.js'></script> -->
+  <!-- uncomment this line ^ to use the motion-ui library -->
+  </div> <!-- End Off Canvas -->
   </body>
 </html>
