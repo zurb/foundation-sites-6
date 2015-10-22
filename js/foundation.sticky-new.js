@@ -46,7 +46,7 @@
     var _this = this,
         $body = $(document.body),
         scroll = $body.scrollTop();
-        console.log(scroll);
+        // console.log(scroll);
     if(this.options.stickTo === 'top'){
       if(scroll >= this.topPoint){
         if(scroll <= this.bottomPoint){
@@ -98,7 +98,7 @@
         mrgn = stickTo === 'top' ? 'marginTop' : 'marginBottom',
         notStuckTo = stickTo === 'top' ? 'bottom' : 'top',
         css = {};
-    console.log(this.anchorHeight, 'bottompoint',this.bottomPoint);
+    // console.log(this.anchorHeight, 'bottompoint',this.bottomPoint);
     css[mrgn] = 0;
     css[stickTo] = this.anchorHeight - this.$element.height();
     css[notStuckTo] = 0;
@@ -111,7 +111,7 @@
     var _this = this,
         newElemWidth = this.$container[0].getBoundingClientRect().width,
         pdng = parseInt(window.getComputedStyle(this.$container[0])['padding-right'], 10);
-        console.log(pdng);
+        // console.log(pdng);
     this.anchorHeight = this.$anchor[0].getBoundingClientRect().height;
     this.$element.css({
       'max-width': newElemWidth - pdng + 'px'
@@ -138,10 +138,10 @@
       topPoint -= mTop;
       bottomPoint -= this.$element[0].getBoundingClientRect().height + mTop// + mBtm;
     }else if(this.options.stickTo === 'bottom'){
-      console.log('topPoint',topPoint);
+      // console.log('topPoint',topPoint);
       // this.$element.offset().top - (this.$element.height() + emCalc(this.options.marginBottom);
       topPoint -= (elemHeight + emCalc(this.options.marginBottom) + emCalc(this.options.marginTop));
-      console.log('topPoint',topPoint);
+      // console.log('topPoint',topPoint);
       bottomPoint += mBtm;
     }else{
       //this would be the stickTo: both option... tricky
