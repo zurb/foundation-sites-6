@@ -29,25 +29,29 @@
     this.$anchor = this.options.stickAt ? $(this.options.stickAt) : $(document.body);
 
     this.$element.addClass(this.options.stickyClass).attr({'data-resize': id, 'data-scroll': id});
+
+    this.isTop = this.options.stickTo === 'top';
     // console.log(this.$container.css('border-top-width'), $(document).height());
     this.$element.on('resizeme.zf.trigger', function(){
+      console.log('something');
       _this._calc(true);
     });
-    $(window).on('scroll', function(){
-      _this._calc(false);
+    $(window).on('scroll', function(e){
+      _this._calc(false, e.currentTarget.scrollY);
     });
     this._calc(true);
   };
 
-  Sticky.prototype._calc = function(checkSizes){
+  Sticky.prototype._calc = function(checkSizes, scroll){
     if(checkSizes){
       this._setSizes();
     }
-    var _this = this,
-        $body = $(document.body),
-        scroll = $body.scrollTop();
+    if(!scroll){ scroll = $(document.body).scrollTop(); }
+    // var _this = this;
+        // $body = $(document.body);
+        // scroll = $body.scrollTop();
         // console.log(scroll);
-    if(this.options.stickTo === 'top'){
+    // if(this.options.stickTo === 'top'){
       if(scroll >= this.topPoint){
         if(scroll <= this.bottomPoint){
           this._setSticky();
@@ -62,24 +66,23 @@
           this._removeSticky();
         }
       }
-    }else{
-      if(scroll >= this.topPoint){
-      // if(scroll >= this.$element.offset().top - (this.$element.height() + emCalc(this.options.marginBottom)) ){
-        if(scroll <= this.bottomPoint){
-          this._setSticky();
-        }else{
-          if(this.$element.hasClass('is-stuck')){
-            this._removeSticky();
-          }
-        }
-      }else{
-        if(this.$element.hasClass('is-stuck')){
-          this._removeSticky();
-        }
-      }
-    }
+    // }else{
+    //   if(scroll >= this.topPoint){
+    //     if(scroll <= this.bottomPoint){
+    //       this._setSticky();
+    //     }else{
+    //       if(this.$element.hasClass('is-stuck')){
+    //         this._removeSticky();
+    //       }
+    //     }
+    //   }else{
+    //     if(this.$element.hasClass('is-stuck')){
+    //       this._removeSticky();
+    //     }
+    //   }
+    // }
   };
-  Sticky.prototype._setSticky = function(sticking){
+  Sticky.prototype._setSticky = function(){
     var stickTo = this.options.stickTo,
         mrgn = stickTo === 'top' ? 'marginTop' : 'marginBottom',
         notStuckTo = stickTo === 'top' ? 'bottom' : 'top',
@@ -93,7 +96,23 @@
                  .addClass('is-stuck is-at-' + stickTo)
                  .css(css);
   };
-  Sticky.prototype._removeSticky = function(){
+
+  // Sticky.prototype._setSticky = function(sticking){
+  //   var stickTo = this.options.stickTo,
+  //       isTop = stickTo === 'top',
+  //       mrgn = isTop ? 'marginTop' : 'marginBottom',
+  //       notStuckTo = isTop ? 'bottom' : 'top',
+  //       css = {};
+  //
+  //   css[mrgn] = this.options[mrgn] + 'em';
+  //   css[isTop ? stickTo : notStuckTo] = 0;
+  //   css[isTop ? notStuckTo : stickTo] = 'auto';
+  //
+  //   this.$element.removeClass('is-anchored')
+  //                .addClass('is-stuck is-at-' + stickTo)
+  //                .css(css);
+  // };
+  Sticky.prototype._removeSticky = function(isBtmPt){
     var stickTo = this.options.stickTo,
         mrgn = stickTo === 'top' ? 'marginTop' : 'marginBottom',
         notStuckTo = stickTo === 'top' ? 'bottom' : 'top',
@@ -107,11 +126,12 @@
                  .addClass('is-anchored is-at-' + notStuckTo)
                  .css(css);
   };
+
   Sticky.prototype._setSizes = function(cb){
     var _this = this,
         newElemWidth = this.$container[0].getBoundingClientRect().width,
         pdng = parseInt(window.getComputedStyle(this.$container[0])['padding-right'], 10);
-        // console.log(pdng);
+
     this.anchorHeight = this.$anchor[0].getBoundingClientRect().height;
     this.$element.css({
       'max-width': newElemWidth - pdng + 'px'
@@ -128,30 +148,27 @@
 
   };
   Sticky.prototype._setBreakPoints = function(elemHeight, cb){
-    // console.log('height',elemHeight);
     var mTop = emCalc(this.options.marginTop),
         mBtm = emCalc(this.options.marginBottom),
         topPoint = this.$anchor.offset().top,
-        bottomPoint = topPoint + this.$anchor[0].getBoundingClientRect().height;
-    // console.log('initial',topPoint, bottomPoint);
+        bottomPoint = topPoint + this.$anchor[0].getBoundingClientRect().height,
+        winHeight = window.innerHeight;
     if(this.options.stickTo === 'top'){
       topPoint -= mTop;
-      bottomPoint -= this.$element[0].getBoundingClientRect().height + mTop// + mBtm;
+      bottomPoint -= this.$element[0].getBoundingClientRect().height + mTop;
     }else if(this.options.stickTo === 'bottom'){
-      // console.log('topPoint',topPoint);
-      // this.$element.offset().top - (this.$element.height() + emCalc(this.options.marginBottom);
-      topPoint -= (elemHeight + emCalc(this.options.marginBottom) + emCalc(this.options.marginTop));
-      // console.log('topPoint',topPoint);
-      bottomPoint += mBtm;
+      topPoint -= (winHeight - (elemHeight + mBtm));
+      bottomPoint -= (winHeight - mBtm);
     }else{
       //this would be the stickTo: both option... tricky
     }
+
     this.topPoint = topPoint;
     this.bottomPoint = bottomPoint;
-    // console.log('final',this.topPoint, this.bottomPoint);
-    cb();
 
-  }
+    cb();
+  };
+
   function emCalc(em){
     return parseInt(window.getComputedStyle(document.body, null).fontSize, 10) * em;
   }

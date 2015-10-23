@@ -72,7 +72,7 @@ $(document).foundation();
       }, Math.floor(Math.random() * 1000));
       ints.push(int);
     });
-    $('#haha').one('click.zf.ok', function(){
+    $('#haha').one('doubleclick.zf.ok', function(){
       ints.forEach(function(i){
         clearInterval(i);
       });
