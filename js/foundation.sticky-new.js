@@ -15,72 +15,68 @@
     marginBottom: 1,
     stickyOn: 'medium',
     stickyClass: 'sticky',
-    containerClass: 'sticky-container'
+    containerClass: 'sticky-container',
+    checkEvery: 15
   };
 
   Sticky.prototype._init = function(){
     var $parent = this.$element.parent('[data-sticky-container]'),
-        id = Foundation.GetYoDigits(6, 'sticky'),
-        _this = this;
-
-    this.$container = $parent.length ? $parent : $(this.options.container).wrapInner(this.$element).end();
+        id = Foundation.GetYoDigits(6, 'sticky');
+        // _this = this;
+    this.$container = $parent.length ? $parent : $(this.options.container).wrapInner(this.$element);
     this.$container.addClass(this.options.containerClass);
 
     this.$anchor = this.options.stickAt ? $(this.options.stickAt) : $(document.body);
 
-    this.$element.addClass(this.options.stickyClass).attr({'data-resize': id, 'data-scroll': id});
+    this.$element.addClass(this.options.stickyClass)
+                 .attr({'data-resize': id, 'data-scroll': id});
 
-    this.isTop = this.options.stickTo === 'top';
+    // this.isTop = this.options.stickTo === 'top';
     // console.log(this.$container.css('border-top-width'), $(document).height());
-    this.$element.on('resizeme.zf.trigger', function(){
-      console.log('something');
-      _this._calc(true);
-    });
-    $(window).on('scroll', function(e){
-      _this._calc(false, e.currentTarget.scrollY);
-    });
+    this.scrollCount = this.options.checkEvery;
     this._calc(true);
+    this._events();
+
   };
+  Sticky.prototype._events = function(){
+    var _this = this;
+
+    this.$element.off('resizeme.zf.trigger')
+                 .on('resizeme.zf.trigger', function(e, el){
+                   console.log(e, el);
+                   setTimeout(function(){
+                      _this._calc(true);
+                   }, 5)
+    });
+
+    $(window).on('scroll.zf.sticky', function(e){
+      if(_this.scrollCount){
+        _this.scrollCount--;
+        _this._calc(false, e.currentTarget.scrollY);
+      }else{
+        _this.scrollCount = _this.options.checkEvery;
+        _this._calc(true, e.currentTarget.scrollY);
+      }
+    });
+  }
 
   Sticky.prototype._calc = function(checkSizes, scroll){
-    if(checkSizes){
-      this._setSizes();
-    }
+    if(checkSizes){ this._setSizes(); }
     if(!scroll){ scroll = $(document.body).scrollTop(); }
-    // var _this = this;
-        // $body = $(document.body);
-        // scroll = $body.scrollTop();
-        // console.log(scroll);
-    // if(this.options.stickTo === 'top'){
-      if(scroll >= this.topPoint){
-        if(scroll <= this.bottomPoint){
-          this._setSticky();
-          // console.log('should be stuck', scroll);
-        }else{
-          if(this.$element.hasClass('is-stuck')){
-            this._removeSticky();
-          }
-        }
+
+    if(scroll >= this.topPoint){
+      if(scroll <= this.bottomPoint){
+        this._setSticky();
       }else{
         if(this.$element.hasClass('is-stuck')){
-          this._removeSticky();
+          this._removeSticky(false);
         }
       }
-    // }else{
-    //   if(scroll >= this.topPoint){
-    //     if(scroll <= this.bottomPoint){
-    //       this._setSticky();
-    //     }else{
-    //       if(this.$element.hasClass('is-stuck')){
-    //         this._removeSticky();
-    //       }
-    //     }
-    //   }else{
-    //     if(this.$element.hasClass('is-stuck')){
-    //       this._removeSticky();
-    //     }
-    //   }
-    // }
+    }else{
+      if(this.$element.hasClass('is-stuck')){
+        this._removeSticky(true);
+      }
+    }
   };
   Sticky.prototype._setSticky = function(){
     var stickTo = this.options.stickTo,
@@ -92,38 +88,27 @@
     css[stickTo] = 0;
     css[notStuckTo] = 'auto';
 
-    this.$element.removeClass('is-anchored')
+    this.$element.removeClass('is-anchored is-at-' + notStuckTo)
                  .addClass('is-stuck is-at-' + stickTo)
                  .css(css);
   };
-
-  // Sticky.prototype._setSticky = function(sticking){
-  //   var stickTo = this.options.stickTo,
-  //       isTop = stickTo === 'top',
-  //       mrgn = isTop ? 'marginTop' : 'marginBottom',
-  //       notStuckTo = isTop ? 'bottom' : 'top',
-  //       css = {};
-  //
-  //   css[mrgn] = this.options[mrgn] + 'em';
-  //   css[isTop ? stickTo : notStuckTo] = 0;
-  //   css[isTop ? notStuckTo : stickTo] = 'auto';
-  //
-  //   this.$element.removeClass('is-anchored')
-  //                .addClass('is-stuck is-at-' + stickTo)
-  //                .css(css);
-  // };
-  Sticky.prototype._removeSticky = function(isBtmPt){
+  Sticky.prototype._removeSticky = function(isTop){
     var stickTo = this.options.stickTo,
-        mrgn = stickTo === 'top' ? 'marginTop' : 'marginBottom',
-        notStuckTo = stickTo === 'top' ? 'bottom' : 'top',
-        css = {};
-    // console.log(this.anchorHeight, 'bottompoint',this.bottomPoint);
-    css[mrgn] = 0;
-    css[stickTo] = this.anchorHeight - this.$element.height();
-    css[notStuckTo] = 0;
+        stickToTop = stickTo === 'top',
+        css = {}, mrgn, notStuckTo;
+        mrgn = stickToTop ? 'marginTop' : 'marginBottom';
+        notStuckTo = stickToTop ? 'bottom' : 'top';
+      css[mrgn] = 0;
 
+    if((isTop && !stickToTop) || (stickToTop && !isTop)){
+      css[stickTo] = this.anchorHeight - this.$element.height();
+      css[notStuckTo] = 0;
+    }else{
+      css[stickTo] = 0;
+      css[notStuckTo] = this.anchorHeight - this.$element.height();
+    }
     this.$element.removeClass('is-stuck is-at-' + stickTo)
-                 .addClass('is-anchored is-at-' + notStuckTo)
+                 .addClass('is-anchored is-at-' + (isTop ? 'top' : 'bottom'))
                  .css(css);
   };
 

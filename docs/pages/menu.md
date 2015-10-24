@@ -19,12 +19,12 @@ The menu is a flexible, all-purpose component for navigation. It replaces Founda
 All versions of the menu are a `<ul>` filled with `<li>` elements containing links. By default, a Menu is horizontally oriented.
 
 ```html_example
-<ul class="menu">
-  <li><a href="#">One</a></li>
-  <li><a href="#">Two</a></li>
-  <li><a href="#">Three</a></li>
-  <li><a href="#">Four</a></li>
-</ul>
+  <ul class="menu">
+    <li><a href="#">One</a></li>
+    <li><a href="#">Two</a></li>
+    <li><a href="#">Three</a></li>
+    <li><a href="#">Four</a></li>
+  </ul>
 ```
 
 ---
