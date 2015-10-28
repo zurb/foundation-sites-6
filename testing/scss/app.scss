@@ -5,27 +5,54 @@
 
 @include foundation-everything;
 
-.card{
-  position:relative;
-  display: inline-block;
-  float: left;
-  height: 450px;
-  width: 33%;
-  border: 1px solid black;
-  margin: 1px;
-  background-color: $primary-color;
-  &.is-stacked{
-    width: 93%;
-    position: absolute;
-  }
-  &.is-stacked:first-of-type{
-    z-index: 5;
-    transform: translate(0, 15%);
-  }
-  &.is-stacked{
-    transform: scale(.8);
-  }
+.is-stacked {
+  position: relative;
+  // overflow-x: hidden;
 }
+.is-stacked .column {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: auto;
+
+}
+.is-stacked .column:first-child {
+  // transition: transform .1s linear;
+  transform: rotate(0deg);
+}
+.is-stacked .column:nth-child(2) {
+  transform: rotate(4deg);
+}
+
+.is-stacked .column:nth-child(3) {
+  transform: rotate(-2deg);
+}
+
+.is-stacked .column:nth-child(4) {
+  transform: rotate(-5deg);
+}
+
+// .card{
+//   position:relative;
+//   display: inline-block;
+//   float: left;
+//   height: 450px;
+//   width: 33%;
+//   border: 1px solid black;
+//   margin: 1px;
+//   background-color: $primary-color;
+//   &.is-stacked{
+//     width: 93%;
+//     position: absolute;
+//   }
+//   &.is-stacked:first-of-type{
+//     z-index: 5;
+//     transform: translate(0, 15%);
+//   }
+//   &.is-stacked{
+//     transform: scale(.8);
+//   }
+// }
 
 
 .slideInDown.mui-enter, .slideInLeft.mui-enter, .slideInUp.mui-enter, .slideInRight.mui-enter, .slideOutDown.mui-leave, .slideOutRight.mui-leave, .slideOutUp.mui-leave, .slideOutLeft.mui-leave, .fadeIn.mui-enter, .fadeOut.mui-leave, .hingeInFromTop.mui-enter, .hingeInFromRight.mui-enter, .hingeInFromBottom.mui-enter, .hingeInFromLeft.mui-enter, .hingeInFromMiddleX.mui-enter, .hingeInFromMiddleY.mui-enter, .hingeOutFromTop.mui-leave, .hingeOutFromRight.mui-leave, .hingeOutFromBottom.mui-leave, .hingeOutFromLeft.mui-leave, .hingeOutFromMiddleX.mui-leave, .hingeOutFromMiddleY.mui-leave, .scaleInUp.mui-enter, .scaleInDown.mui-enter, .scaleOutUp.mui-leave, .scaleOutDown.mui-leave, .spinIn.mui-enter, .spinOut.mui-leave, .spinInCCW.mui-enter, .spinOutCCW.mui-leave {

@@ -17,6 +17,7 @@
 
   Swipin.prototype._init = function(){
     this.$cards = this.$element.find('.card');
+    console.log(this.$cards);
     this.$cards.each(function(){
       var $card = $(this);
       // $card.addTouch();
@@ -29,8 +30,7 @@
 
   Swipin.prototype._events = function(){
     var _this = this;
-    $(window).off('.zf.mediaquery')
-             .on('changed.zf.mediaquery', function(e, newSize, oldSize){
+    $(window).on('changed.zf.mediaquery', function(e, newSize, oldSize){
                _this._handleMQChange(newSize, oldSize);
              });
 
@@ -46,10 +46,14 @@
   Swipin.prototype._addSwipe = function(){
     var _this = this;
     this.$cards.on('swiperight.zf.swipin', function(e){
-       _this._swipe($(this), 'Right');
-      }).on('swipeleft.zf.swipin', function(e){
-       _this._swipe($(this), 'Left');
-      });
+                  e.preventDefault();
+                  console.log('swiping right');
+                   _this._swipe($(this), 'Right');
+                }).on('swipeleft.zf.swipin', function(e){
+                    e.preventDefault();
+                    console.log('swiping left');
+                   _this._swipe($(this), 'Left');
+                });
   };
   Swipin.prototype._pauseSwipe = function(){
     this.$cards.off('swipeleft.zf.swipin swiperight.zf.swipin');
@@ -78,11 +82,18 @@
   };
 
   Swipin.prototype._stack = function(){
-    this.$cards.addClass('is-stacked');
+    var counter = this.$cards.length;
+    // var _this
+
+    this.$cards.each(function(){
+      $(this).css('z-index', counter);
+      counter--;
+    });
+    this.$element.addClass('is-stacked');
     this.stacked = true;
   };
   Swipin.prototype._unstack = function(){
-    this.$cards.removeClass('is-stacked');
+    this.$element.removeClass('is-stacked');
     this.stacked = false;
   };
 
