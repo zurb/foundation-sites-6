@@ -58,7 +58,7 @@ var Foundation = {
     plugin.$element.attr('data-' + pluginName, plugin.uuid).trigger('init.zf.' + pluginName);
 
     this._activePlugins[plugin.uuid] = plugin;
-
+    console.log(plugin.uuid);
     return;
   },
   /**
