@@ -12,7 +12,9 @@
 
   Swipin.defaults = {
     cardClass: 'card',
-    unstackOn: 'medium'
+    unstackOn: 'medium',
+    yesClass: 'success',
+    noClass: 'alert'
   };
 
   Swipin.prototype._init = function(){
@@ -38,11 +40,20 @@
       this._addSwipe();
     }
 
-    this.$cards.off('click.zf.swipin tap.zf.swipin')
+    this.$cards.find('.thumbnail').off('click.zf.swipin tap.zf.swipin')
                .on('click.zf.swipin tap.zf.swipin', function(e){
-                 console.log('mouseup', e);
+                 console.log('mouseup', $(e.target).hasClass('success'));
                });
   };
+  Swipin.prototype._addBtnClicks = function(){
+    var _this = this;
+    this.$cards.each(function(){
+      var $card = $(this);
+      $card.find('.button').off('click.zf.swipin tap.zf.swipin').on('click.zf.yayornay', function(e){
+        console.log($(this).hasClass('success'));
+      })
+    });
+  }
   Swipin.prototype._addSwipe = function(){
     var _this = this;
     this.$cards.on('swiperight.zf.swipin', function(e){
@@ -86,13 +97,19 @@
     // var _this
 
     this.$cards.each(function(){
-      $(this).css('z-index', counter);
+      $(this).css('z-index', counter)
+             .find('.button-group').hide();
       counter--;
     });
     this.$element.addClass('is-stacked');
     this.stacked = true;
   };
   Swipin.prototype._unstack = function(){
+    this.$cards.each(function(){
+      $(this).css('z-index', '')
+             .find('.button-group').show();
+    });
+
     this.$element.removeClass('is-stacked');
     this.stacked = false;
   };

@@ -5,19 +5,25 @@
 
 @include foundation-everything;
 
-.is-stacked {
+.swipin {
   position: relative;
-  // overflow-x: hidden;
+
+  .thumbnail .button-group{
+    margin-bottom: 0;
+    margin-top: .25em;
+    .button{
+      border: 1px solid #FEFEFE;
+      border-radius: 0px;
+    }
+  }
 }
 .is-stacked .column {
   position: absolute;
   top: 0;
   left: 0;
   width: auto;
-
 }
 .is-stacked .column:first-child {
-  // transition: transform .1s linear;
   transform: rotate(0deg);
 }
 .is-stacked .column:nth-child(2) {
