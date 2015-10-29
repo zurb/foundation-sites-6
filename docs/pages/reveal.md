@@ -15,6 +15,7 @@ tags:
     <li>Instead of each modal getting it’s own background, maybe generate one for the whole page if a modal is detected?</li>
     <li>Needs accessibility compliant keyboard access bindings.</li>
     <li>Sometimes click events are firing on the anchor in Firefox w/o clicking.</li>
+    <li>Not being positioned correctly if the element will become fullscreen and does not have the fullscreen option/class applied.</li>
   </ul>
 </div>
 

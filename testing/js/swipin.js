@@ -79,7 +79,10 @@
     var _this = this,
         modal = '<div class="reveal" data-reveal></div>',
         counter = this.$cards.length,
-        lorem = '<p>This would be the details for the card.</p><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis Yetis exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse Squid dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non Foundation 6 is Awesome, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>';
+
+        closeBtn = '<button class="close-button" aria-label="Close alert" type="button"><span>&times;</span></button>',
+
+        lorem = '<p>This would be the details for the card.</p><p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do squid tempor incididunt ut labore et Foundation 6 is Awesome. Ut enim ad minim veniam, quis yetis.</p>';
 
     var $modals = $();
     this.reveals = [];
@@ -88,15 +91,16 @@
       var $card = $(this),
           imgSrc = $card.find('img').attr('src'),
           id = this.id || Foundation.GetYoDigits(6, 'card-detail'),
-          reveal = new Foundation.Reveal($(modal).attr('id', id));
+          reveal = new Foundation.Reveal($(modal).attr('id', id)),
+          $closeBtn = $(closeBtn).attr('data-close', id);
 
       $card.attr('data-open', id);
-
-      reveal.$element.append('<img src="' + imgSrc + '"/>' + lorem);
+      reveal.$element.append($closeBtn, '<img src="' + imgSrc + '"/>' + lorem);
 
       _this.reveals.push(reveal);
       $modals = $modals.add(reveal.$element);
     });
+
     $(document.body).append($modals);
   };
   /**
@@ -127,7 +131,7 @@
   Swipin.prototype._handleClick = function(e, $card){
     var $target = $(e.target),
         isBtn = $target.hasClass(this.options.btnClass);
-
+        
     if(isBtn){
       e.stopImmediatePropagation();
       var isYes = $target.hasClass(this.options.yesClass);

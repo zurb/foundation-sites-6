@@ -77,6 +77,7 @@
   function GetOffsets(element, anchor, position, vOffset, hOffset, isOverflow){
     var $eleDims = GetDimensions(element),
         $anchorDims = anchor ? GetDimensions(anchor) : null;
+        console.log(position);
     switch(position){
       case 'top':
         return {
@@ -121,6 +122,7 @@
         };
         break;
       case 'center':
+        console.log(($eleDims.windowDims.offset.top + ($eleDims.windowDims.height / 2)) - ($eleDims.height / 2));
         return {
           left: ($eleDims.windowDims.offset.left + ($eleDims.windowDims.width / 2)) - ($eleDims.width / 2),
           top: ($eleDims.windowDims.offset.top + ($eleDims.windowDims.height / 2)) - ($eleDims.height / 2)
