@@ -1,3 +1,8 @@
+/**
+ * Tabs module.
+ * @module foundation.tabs
+ * @requires foundation.util.keyboard
+ */
 !function($, Foundation) {
   'use strict';
 
@@ -23,7 +28,7 @@
   Tabs.defaults = {
     deepLinking: false,
     scrollToContent: false,
-    autoFocus: true,
+    autoFocus: false,
     wrapOnKeys: true
   };
 
@@ -48,7 +53,6 @@
       $link.attr({
         'role': 'tab',
         'aria-controls': hash,
-        'tabindex': $link.attr('tabindex') || tabIndex,
         'aria-selected': isActive,
         'id': linkId
       });
@@ -100,7 +104,7 @@
     var $firstTab = _this.$element.find('li:first-of-type');
     var $lastTab = _this.$element.find('li:last-of-type');
 
-    this.$tabTitles.on('keyup.zf.tabs', function(e){
+    this.$tabTitles.on('keydown.zf.tabs', function(e){
       e.stopPropagation();
       e.preventDefault();
       var $tabTitle = $(this),
@@ -117,31 +121,23 @@
         }
       }
 
-      switch (e.which) {
-
-        case 32://return or spacebar
-        case 13:
+      // handle keyboard event with keyboard util
+      Foundation.handleKey(e, _this, {
+        open: function() {
           $tabTitle.focus();
           _this._handleTabChange($tabTitle);
-          break;
-
-        case 37://left or up
-        case 38:
+        },
+        previous: function() {
           if(checkClass($prev)){ return; }
           $prev.focus();
           _this._handleTabChange($prev)
-          break;
-
-        case 39://right or down
-        case 40:
+        },
+        next: function() {
           if(checkClass($next)){ return; }
           $next.focus();
           _this._handleTabChange($next)
-          break;
-
-        default:
-          return;
-      }
+        }
+      });
     });
   };
 

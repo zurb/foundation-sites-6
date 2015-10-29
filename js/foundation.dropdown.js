@@ -1,3 +1,9 @@
+/**
+ * Dropdown module.
+ * @module foundation.dropdown
+ * @requires foundation.util.keyboard
+ * @requires foundation.util.size-and-collision
+ */
 !function($, Foundation){
   'use strict';
 
@@ -11,6 +17,8 @@ NEEDS:
     this.$element = element;
     this.options = $.extend({}, Dropdown.defaults, this.$element.data());
     this._init();
+
+    Foundation.registerPlugin(this);
   }
 
   Dropdown.defaults = {
@@ -27,14 +35,21 @@ NEEDS:
     var $id = this.$element.attr('id');
 
     this.$anchor = $('[data-toggle="' + $id + '"]') || $('[data-open="' + $id + '"]');
-    this.$anchor.attr({'aria-controls': $id, 'data-is-focus': 'false', 'data-yeti-box': $id});
+    this.$anchor.attr({
+      'aria-controls': $id,
+      'data-is-focus': false,
+      'data-yeti-box': $id,
+      'aria-haspopup': true
+      // 'data-resize': $id
+    });
 
     this.options.positionClass = this.getPositionClass();
     this.counter = 4;
     this.usedPositions = [];
     this.$element.attr({
       'aria-hidden': 'true',
-      'data-yeti-box': $id
+      'data-yeti-box': $id,
+      'data-resize': $id
     }).hide();
     this._events();
     this.$element.trigger('init.zf.dropdown');
@@ -112,7 +127,8 @@ NEEDS:
       'open.zf.trigger': this.open.bind(this),
       'close.zf.trigger': this.close.bind(this),
       'toggle.zf.trigger': this.toggle.bind(this),
-      'closeme.zf.trigger': this.close.bind(this)
+      // 'closeme.zf.trigger': this.close.bind(this),
+      'resizeme.zf.trigger': this.setPosition.bind(this)
     });
     this.$element.on('close.zf.trigger', function(){
       console.log('hello', this);
@@ -162,6 +178,7 @@ NEEDS:
       this.counter = 4;
       this.usedPositions.length = 0;
     }
+    // Foundation.reflow(this.$element, 'dropdown');
   };
 
   Dropdown.prototype.toggle = function(){

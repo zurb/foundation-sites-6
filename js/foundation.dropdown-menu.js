@@ -1,3 +1,9 @@
+/**
+ * DropdownMenu module.
+ * @module foundation.dropdown-menu
+ * @requires foundation.util.keyboard
+ * @requires foundation.util.size-and-collision
+ */
 !function(Foundation, $) {
   'use strict';
 
@@ -12,7 +18,6 @@
     this.$element = element;
     this.options = $.extend({}, DropdownMenu.defaults, this.$element.data());
 
-    // this.$openMenu = $();
     this._init();
 
     /**
@@ -34,16 +39,18 @@
     hoverDelay: 150,
     closingTime: 500,
     keyboardAccess: true,
-    wrapOnKeys: true,
+    // wrapOnKeys: true,
     alignment: 'left',
-    vertical: false
+    vertical: false,
+    vertClass: 'vertical',
+    rightClass: 'align-right'
   };
 
   DropdownMenu.prototype._init = function() {
     this.$element.attr('role', 'menubar');
-    this.options.vertical = this.$element.hasClass('vertical');
-    this._prepareMenu(this.$element);
-    this._addTopLevelKeyHandler();
+    this.options.vertical = this.$element.hasClass(this.options.vertClass);
+    this._prepareMenu();
+    // this._addTopLevelKeyHandler();
   };
 
   DropdownMenu.prototype._prepareMenu = function(){
@@ -53,9 +60,14 @@
     this.$submenus = this.$element.find('li.has-submenu');
     this.$menuItems = this.$element.find('li').attr({'role': 'menuitem', 'tabindex': 0});
     this.$menuItems.children('a').attr('tabindex', -1);
-    if(this.$element.hasClass('align-right')){
+    if(this.$element.hasClass(this.options.rightClass)){
       this.options.alignment = 'right';
-      this.$submenus.addClass('right');
+      this.$submenus.addClass('is-right-arrow');
+    }else{
+      this.$submenus.addClass('is-left-arrow');
+    }
+    if(!this.options.vertical){
+      this.$tabs.removeClass('is-right-arrow is-left-arrow').addClass('is-down-arrow');
     }
 
     this.$tabs.each(function(){
@@ -69,13 +81,13 @@
         $tab.attr('aria-haspopup', true);
       }
     });
-    // this.$tabs[0].setAttribute('tabindex', 0);
+
 
     this.$submenus.each(function(){
       var $sub = $(this);
 
-      if(_this.$element.hasClass('align-right')){
-        $sub.children('[data-submenu]').addClass('right');
+      if(_this.options.alignment === 'right'){
+        $sub.children('[data-submenu]').addClass('is-right-arrow');
       }
 
       $sub.children('[data-submenu]')
@@ -90,11 +102,6 @@
 
   DropdownMenu.prototype._events = function($elem){
     var _this = this;
-
-
-    // if(this.options.keyboardAccess){
-    //   this._addKeyupHandler($elem);
-    // }
 
     if(this.options.clickOpen){
       $elem.on('click.zf.dropdownmenu tap.zf.dropdownmenu touchend.zf.dropdownmenu', function(e){
@@ -140,83 +147,106 @@
         }
       });
     }
+
+    if (this.options.keyboardAccess) {
+      this.$menuItems.on('keydown.zf.dropdownmenu', function(e){
+        var $element = $(this),
+            $tabs = _this.$element.children('li'),
+            isTab = $element.is($tabs),
+            $elements = isTab ? $tabs : $element.parents('li').first().add($element.parent('ul').children('li')),
+            $prevElement,
+            $nextElement;
+
+        $elements.each(function(i) {
+          if ($(this).is($element)) {
+            $prevElement = $elements.eq(i-1);
+            $nextElement = $elements.eq(i+1);
+            return;
+          }
+        });
+        var nextSibling = function() {
+          if (!$element.is(':last-child')) $nextElement.focus();
+        }, prevSibling = function() {
+          $prevElement.focus();
+        }, openSub = function() {
+          if ($element.has('ul').length) {
+            _this._show($element);
+            $element.find('li').first().focus();
+          }
+        }, closeSub = function() {
+          //if ($element.is(':first-child')) {
+            $element.parents('li').first().focus();
+            _this._hide($element.parents('li').first());
+          //}
+        };
+        var functions = {
+          open: openSub,
+          close: function() {
+            _this._hideAll();
+            _this.$menuItems.first().focus(); // focus to first element
+          },
+          handled: function() {
+            e.preventDefault();
+            e.stopImmediatePropagation();
+          }
+        };
+
+        if (isTab) {
+          if (_this.options.vertical) { // vertical menu
+            if (_this.options.alignment === 'left') { // left aligned
+              $.extend(functions, {
+                down: nextSibling,
+                up: prevSibling,
+                next: openSub,
+                previous: closeSub,
+              });
+            } else { // right aligned
+              $.extend(functions, {
+                down: nextSibling,
+                up: prevSibling,
+                next: closeSub,
+                previous: openSub,
+              });
+            }
+          } else { // horizontal menu
+            $.extend(functions, {
+              next: nextSibling,
+              previous: prevSibling,
+              down: openSub,
+              up: closeSub,
+            });
+          }
+        } else { // not tabs -> one sub
+          if (_this.options.alignment === 'left') { // left aligned
+            $.extend(functions, {
+              next: openSub,
+              previous: closeSub,
+              down: nextSibling,
+              up: prevSibling
+            });
+          } else { // right aligned
+            $.extend(functions, {
+              next: closeSub,
+              previous: openSub,
+              down: nextSibling,
+              up: prevSibling
+            });
+          }
+        }
+        Foundation.handleKey(e, _this, functions);
+      });
+    } // end if keyboardAccess
   };
-  DropdownMenu.prototype._addTopLevelKeyHandler = function(){
-    Foundation.KeyboardAccess(this);
-    // var _this = this,
-    //     vertical = this.options.vertical,
-    //     $firstItem = this.$element.children('li:first-of-type'),
-    //     $lastItem = this.$element.children('li:last-of-type');
-    // this.$tabs.on('focus.zf.dropdownmenu', function(){
-    //   // console.log('what?', this);
-    //   _this._show($(this));
-    // }).on('focusout.zf.dropdownmenu', function(e){
-    //   console.log('au revoir');
-    //   _this._hide($(this))
-    // });
-    // this.$tabs.on('keydown.zf.dropdownmenu', function(e){
-    //   if (e.which !== 9) {
-    //     e.preventDefault();
-    //     e.stopPropagation();
-    //   }
-    //   console.log(e.which);
-    //
-    //   var $tabTitle = $(this),
-    //       $prev = $tabTitle.prev(),
-    //       $next = $tabTitle.next();
-    //   if(_this.options.wrapOnKeys){
-    //     $prev = $prev.length ? $prev : $lastItem;
-    //     $next = $next.length ? $next : $firstItem;
-    //   }
-    //   if(checkClass($prev) || checkClass($next)){
-    //     return;
-    //   }
-    //
-    //   switch (e.which) {
-    //
-    //     case 32://return or spacebar
-    //     case 13:
-    //       console.log($tabTitle.find('ul.submenu > li:first-of-type'));
-    //       $tabTitle.find('[role="menuitem"]:first-of-type').addClass('is-active').focus().select();
-    //       // _this._hideOthers($tabTitle);
-    //       _this._show($tabTitle);
-    //       break;
-    //
-    //     case 40: //down
-    //       break;
-    //     case 38://up
-    //       break;
-    //
-    //     case 37://left
-    //     if(vertical){
-    //       break;
-    //     }
-    //       $prev.focus();
-    //       // _this._hideOthers($prev);
-    //       _this._show($prev);
-    //       break;
-    //     case 39://right
-    //     if(vertical){
-    //       break;
-    //     }
-    //       $next.focus();
-    //       // _this._hideOthers($next);
-    //       _this._show($next);
-    //       break;
-    //
-    //     case 27://esc
-    //       _this._hideAll();
-    //       $tabTitle.blur();
-    //       break;
-    //     default:
-    //       return;
-    //   }
-    // });
-  };
 
-  DropdownMenu.prototype._addKeyupHandler = function($elem){
-
-
+  DropdownMenu.prototype._toggle = function($elem){
+    var _this = this;
+    // console.log($elem);
+    if($elem.hasClass('is-active')){
+      _this._hide($elem);
+    }else{
+      // console.log('this',this);
+      this._show($elem);
+    }
   };
   DropdownMenu.prototype._addBodyHandler = function(){
     var $body = $('body'),
@@ -228,6 +258,9 @@
   };
 //show & hide stuff @private
   DropdownMenu.prototype._show = function($elem){
+    this._hideOthers($elem);
+    $elem.focus();
+    // console.log('showing some stuff', $elem.find('li:first-child'));
     var $sub = $elem.children('[data-submenu]:first-of-type');
     $elem.addClass('is-active');
     $sub.css('visibility', 'hidden').addClass('js-dropdown-active')
@@ -238,9 +271,9 @@
     var clear = Foundation.ImNotTouchingYou($sub, null, true);
     if(!clear){
       if(this.options.alignment === 'left'){
-        $sub.addClass('right');
+        $sub.removeClass('is-is-left-arrow').addClass('is-right-arrow');
       }else{
-        $sub.removeClass('right');
+        $sub.removeClass('is-right-arrow').addClass('is-left-arrow');
       }
       this.changed = true;
     }
@@ -266,9 +299,9 @@
       if(this.changed){
         //remove position class
         if(this.options.alignment === 'left'){
-          $elems.find('.right').removeClass('right');
+          $elems.find('.is-right-arrow').removeClass('is-right-arrow').addClass('is-left-arrow');
         }else{
-          $elems.find('[data-submenu]').addClass('right');
+          $elems.find('.is-left-arrow').removeClass('is-left-arrow').addClass('is-right-arrow');
         }
       }
     }

@@ -1,3 +1,9 @@
+/**
+ * Accordion module.
+ * @module foundation.accordion
+ * @requires foundation.util.keyboard
+ * @requires foundation.util.animationFrame
+ */
 !function($) {
   'use strict';
 
@@ -48,6 +54,7 @@
 
     this.$element.find('li').each(function() {
       var $tabContent = $(this).children('[data-tab-content]');
+      var $elem = $(this);
       if ($tabContent.length) {
         $(this).on('click.zf.accordion', function(e) {
         // $(this).children('a').on('click.zf.accordion', function(e) {
@@ -60,17 +67,44 @@
           else {
             _this.down($tabContent);
           }
+        }).on('keydown.zf.accordion', function(e){
+          Foundation.handleKey(e, _this, {
+            toggle: function() {
+              _this.toggle($tabContent);
+            },
+            next: function() {
+              console.log( $tabContent.parent(),$tabContent.parent().next());
+              $tabContent.parent().next().find('a').focus().trigger('click.zf.accordion');
+            },
+            previous: function() {
+              $tabContent.parent().prev().find('a').focus().trigger('click.zf.accordion');
+
+            },
+            handled: function() {
+              e.preventDefault();
+              e.stopPropagation();
+            }
+          });
         });
       }
     });
   };
-
+  Accordion.prototype.toggle = function($target){
+    if($target.parent().hasClass('is-active')){
+      if(this.options.allowAllClosed || $target.parent().siblings().hasClass('is-active')){
+        this.up($target);
+      }else{ return; }
+    }else{
+      this.down($target);
+    }
+  };
   /**
    * Opens the accordion tab defined by `$target`.
    * @param {jQuery} $target - Accordion tab to open.
    * @fires Accordion#down
    */
   Accordion.prototype.down = function($target, firstTime) {
+    var _this = this;
     if(!this.options.multiExpand && !firstTime){
       var $currentActive = this.$element.find('.is-active').children('[data-tab-content]');
       if($currentActive){
@@ -80,11 +114,15 @@
     $target
       .parent('[data-tab-content]')
       .addBack()
-      .slideDown(this.options.slideSpeed)
+      // .slideDown(this.options.slideSpeed)
       .parent().addClass(firstTime ? '' : 'is-active');
 
+    Foundation.Move(_this.options.slideSpeed, $target, function(){
+      $target.slideDown(_this.options.slideSpeed);
+    });
+
     if(!firstTime){
-      console.log('reflowing yo!');
+      // console.log('reflowing yo!');
       // Foundation.reflow(this.$element, 'accordion');
     }
     /**
@@ -100,16 +138,22 @@
    * @fires Accordion#up
    */
   Accordion.prototype.up = function($target) {
-    var $aunts = $target.parent().siblings();
+    var $aunts = $target.parent().siblings(),
+        _this = this;
     var canClose = this.options.multiExpand ? $aunts.hasClass('is-active') : $target.parent().hasClass('is-active');
 
     if(!this.options.allowAllClosed && !canClose){
       return;
     }
-    $target.slideUp(this.options.slideSpeed, function() {
-      $target.find('[data-tab-content]').slideUp(0);
-    })
-      .parent().removeClass('is-active');
+    $target.find('[data-tab-content]').slideUp(0);
+
+    Foundation.Move(this.options.slideSpeed, $target, function(){
+      $target.slideUp(_this.options.slideSpeed)
+    });
+    // $target.slideUp(this.options.slideSpeed, function() {
+    //   $target.find('[data-tab-content]').slideUp(0);
+    // })
+    $target.parent().removeClass('is-active');
 
     /**
      * Fires when the tab is done collapsing up.

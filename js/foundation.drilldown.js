@@ -1,3 +1,9 @@
+/**
+ * Drilldown module.
+ * @module foundation.drilldown
+ * @requires foundation.util.keyboard
+ * @requires foundation.util.animationFrame
+ */
 !function($, Foundation){
   'use strict';
 
@@ -10,12 +16,13 @@
     backButton: '<li class="js-drilldown-back"><a>Back</a></li>',
     wrapper: '<div></div>',
     closeOnClick: true,
-    holdOpen: false
+    holdOpen: false,
+    maxWidth: 200
   };
   Drilldown.prototype._init = function(){
     this.$submenuAnchors = this.$element.find('li.has-submenu');
     this.$submenus = this.$submenuAnchors.children('[data-submenu]').addClass('is-drilldown-sub')/*.wrap($(this.options.wrapper).addClass('is-drilldown-sub'))*/;
-    // this.$rootMenus = this.$element.children('[data-submenu]').addClass('first-sub');
+    // this.$rootElems = this.$element.children('[data-submenu]')/*.addClass('first-sub')*/;
     this.$menuItems = this.$element.find('li').not('.js-drilldown-back').attr('role', 'menuitem');
     // this.$submenus;
 
@@ -36,7 +43,7 @@
       $sub.children('[data-submenu]')
           .attr({
             'aria-hidden': true,
-            'tabindex': -1,
+            'tabindex': 0,
             'role': 'menu'
           });
       _this._events($sub);
@@ -54,10 +61,11 @@
     var _this = this;
 
     $elem/*.off('mouseup.zf.drilldown tap.zf.drilldown touchend.zf.drilldown')*/
-    .on('mouseup.zf.drilldown tap.zf.drilldown touchend.zf.drilldown', function(e){
-      // e.preventDefault();
+    .on('mousedown.zf.drilldown tap.zf.drilldown touchend.zf.drilldown', function(e){
+      // console.log('mouse event', $elem);
+      e.preventDefault();
       e.stopPropagation();
-      console.log(e);
+
       if(e.target !== e.currentTarget.firstElementChild){
         return false;
       }
@@ -65,28 +73,37 @@
 
       if(_this.options.closeOnClick){
         var $body = $('body').not(_this.$wrapper);
-        $body.off('.zf.drilldown').on('mouseup.zf.drilldown tap.zf.drilldown touchend.zf.drilldown', function(e){
-          console.log('body mouseup');
+        $body.off('.zf.drilldown').on('mousedown.zf.drilldown tap.zf.drilldown touchend.zf.drilldown', function(e){
+          // console.log('body mouseup');
           e.preventDefault();
           _this._hideAll();
           $body.off('.zf.drilldown');
         });
       }
+    }).on('focus.zf.drilldown', function(){
+      // console.log('something');
+      _this._show($elem);
+    });
+    $elem.find('.js-drilldown-back').eq(0).on('mousedown.zf.drilldown tap.zf.drilldown touchend.zf.drilldown', function(e){
+      //do stuff
+      // console.log('back button');
     });
   };
   Drilldown.prototype._hideAll = function(){
     this.$element.find('.is-drilldown-sub.is-active').addClass('is-closing')
         .on('transitionend.zf.drilldown', function(e){
+          // console.log('transitionend');
           $(this).removeClass('is-active is-closing').off('transitionend.zf.drilldown');
-
         });
   };
   Drilldown.prototype._back = function($elem){
-    $elem.off('mouseup.zf.drilldown tap.zf.drilldown touchend.zf.drilldown');
+    $elem.off('mousedown.zf.drilldown tap.zf.drilldown touchend.zf.drilldown');
     $elem.children('.js-drilldown-back')
-        .on('mouseup.zf.drilldown tap.zf.drilldown touchend.zf.drilldown', function(e){
+        .on('mousedown.zf.drilldown tap.zf.drilldown touchend.zf.drilldown', function(e){
+          // console.log('mouseup on back');
           $elem.addClass('is-closing').on('transitionend.zf.drilldown', function(e){
             // e.stopImmediatePropagation();
+            // console.log('different transitionend');
             $elem.removeClass('is-active is-closing').off('transitionend.zf.drilldown');
           });
         });
@@ -94,8 +111,9 @@
   Drilldown.prototype._menuLinkEvents = function(){
     var _this = this;
     this.$menuItems.not('.has-submenu')
-        .off('mouseup.zf.drilldown tap.zf.drilldown touchend.zf.drilldown')
-        .on('mouseup.zf.drilldown tap.zf.drilldown touchend.zf.drilldown', function(e){
+        .off('mousedown.zf.drilldown tap.zf.drilldown touchend.zf.drilldown')
+        .on('mousedown.zf.drilldown tap.zf.drilldown touchend.zf.drilldown', function(e){
+          // console.log('random link mouse event');
           e.stopImmediatePropagation();
           setTimeout(function(){
             _this._hideAll();
@@ -103,7 +121,6 @@
       });
   };
   Drilldown.prototype._show = function($elem){
-
     $elem.children('[data-submenu]').addClass('is-active');
   };
   Drilldown.prototype.getMaxHeight = function(){
@@ -114,9 +131,20 @@
     });
     // console.log('1',this.$menuItems[0].getBoundingClientRect().height);
     result.height = max * this.$menuItems[0].getBoundingClientRect().height + 'px';
-    result.width = this.$menuItems[0].getBoundingClientRect().width + 'px';
+    // result.width = this.$menuItems[0].getBoundingClientRect().width + 'px';
+    result.width = this.options.maxWidth;
 
     return result;
+  };
+  Drilldown.prototype.destroy = function(){
+    this._hideAll();
+    this.$element.unwrap()
+                 .find('.js-drilldown-back').remove()
+                 .end().find('.is-active, .is-closing, .is-drilldown-sub').removeClass('is-active is-closing is-drilldown-sub')
+                 .end().find('[data-submenu]').removeAttr('aria-hidden tabindex role')
+                 .off('.zf.drilldown').end().off('zf.drilldown');
+
+    this.$element.trigger('destroyed.zf.drilldown');
   };
   Foundation.plugin(Drilldown);
 }(jQuery, window.Foundation);
@@ -158,7 +186,7 @@
 //
 //   Drilldown.prototype = {
 //     /**
-//      * Initializes the Drilldown by creating a container to wrap the menu bar in, and initializing all submenus.
+//      * Initializes the Drilldown by creating a container to wrap the Menu in, and initializing all submenus.
 //      * @private
 //      */
 //     _init: function() {
@@ -170,7 +198,7 @@
 //     },
 //
 //     /**
-//      * Scans a menu bar for any sub menu bars inside of it. This is a recursive function, so when a sub menu is found, this method will be called on that sub menu.
+//      * Scans a Menu for any sub Menus inside of it. This is a recursive function, so when a sub menu is found, this method will be called on that sub menu.
 //      * @private
 //      * @param {jQuery} $elem - Menu to scan for sub menus.
 //      * @param {Boolean} root - If true, the menu being scanned is at the root level.

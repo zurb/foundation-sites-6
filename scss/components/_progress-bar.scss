@@ -27,6 +27,7 @@ $progress-meter-background: $primary-color !default;
   background-color: $progress-background;
   height: $progress-height;
   margin-bottom: $progress-margin-bottom;
+  border-radius: $global-radius;
 }
 
 /// Adds styles for the inner meter of a progress bar.
@@ -36,13 +37,14 @@ $progress-meter-background: $primary-color !default;
   width: 0%;
   height: 100%;
   background-color: $progress-meter-background;
+  border-radius: $global-radius;
 }
 
 /// Adds styles for text in the progress meter.
 @mixin progress-meter-text {
   position: absolute;
   top: 50%;
-  left: 50%;
+  #{$global-left}: 50%;
   transform: translate(-50%, -50%);
   margin: 0;
   font-size: 0.75rem;
