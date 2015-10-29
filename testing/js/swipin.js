@@ -78,7 +78,6 @@
   Swipin.prototype._makeModals = function(){
     var _this = this,
         modal = '<div class="reveal" data-reveal></div>',
-        counter = this.$cards.length,
 
         closeBtn = '<button class="close-button" aria-label="Close alert" type="button"><span>&times;</span></button>',
 
@@ -95,7 +94,7 @@
           $closeBtn = $(closeBtn).attr('data-close', id);
 
       $card.attr('data-open', id);
-      reveal.$element.append($closeBtn, '<img src="' + imgSrc + '"/>' + lorem);
+      reveal.$element.append($closeBtn, '<img src="http://placehold.it/250x325"/>' + lorem);
 
       _this.reveals.push(reveal);
       $modals = $modals.add(reveal.$element);
@@ -131,7 +130,7 @@
   Swipin.prototype._handleClick = function(e, $card){
     var $target = $(e.target),
         isBtn = $target.hasClass(this.options.btnClass);
-        
+
     if(isBtn){
       e.stopImmediatePropagation();
       var isYes = $target.hasClass(this.options.yesClass);
