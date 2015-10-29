@@ -7,7 +7,7 @@
 
 .swipin {
   position: relative;
-
+   top: 50px;
   .thumbnail .button-group{
     margin-bottom: 0;
     margin-top: .25em;
@@ -19,23 +19,24 @@
 }
 .is-stacked .column {
   position: absolute;
-  top: 0;
   left: 0;
   width: auto;
+  transition: transform .5s ease;
+  transform: scale(0.6) translate(0px, -30%);
 }
 .is-stacked .column:first-child {
-  transform: rotate(0deg);
+  transform: scale(1) translate(0px, 0);
 }
 .is-stacked .column:nth-child(2) {
-  transform: rotate(4deg);
+  transform: scale(0.9) translate(0px, -10%);
 }
 
 .is-stacked .column:nth-child(3) {
-  transform: rotate(-2deg);
+  transform: scale(0.8) translate(0px, -20%);;
 }
 
 .is-stacked .column:nth-child(4) {
-  transform: rotate(-5deg);
+  transform: scale(0.7) translate(0px, -30%);
 }
 
 
