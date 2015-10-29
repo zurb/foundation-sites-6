@@ -44,10 +44,21 @@ $grid-column-gutter: $bb-form-card-margin / 2;
 //Pads the input field.
 .my-input-area {
   padding: $bb-form-padding;
+  position: relative;
+  input {
+    margin-top: 1rem;
+    padding-left: 2.5rem;
+  }
+}
+
+.input-icon {
+  @include v-align-middle;
+  left: 1.75rem;
+  color: $medium-gray;
 }
 
 //Active state for input area.
-.my-input-area.active {
+.my-input-area.is-active {
   background: $medium-gray;
   box-shadow:inset 4px 0px 0px 0px $dark-gray;
 }
