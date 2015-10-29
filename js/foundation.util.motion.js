@@ -37,17 +37,26 @@ function animate(isIn, element, animation, cb) {
   reset();
   element.addClass(animation);
   element.css('transition', 'none');
-  requestAnimationFrame(function() {
-    element.addClass(initClass);
-    if (isIn) element.show();
-  });
 
-  // Start the animation
-  requestAnimationFrame(function() {
+  Foundation.Move(500, element, function(){
+    element.addClass(initClass);
     element[0].offsetWidth;
     element.css('transition', '');
     element.addClass(activeClass);
+
+    if (isIn) element.show();
   });
+  // requestAnimationFrame(function() {
+  //   element.addClass(initClass);
+  //   if (isIn) element.show();
+  // });
+
+  // Start the animation
+  // requestAnimationFrame(function() {
+  //   element[0].offsetWidth;
+  //   element.css('transition', '');
+  //   element.addClass(activeClass);
+  // });
 
   // Clean up the animation when it finishes
   element.one('transitionend', finish);
