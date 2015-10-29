@@ -5,7 +5,8 @@
   "scripts": {
     "start": "gulp",
     "test": "gulp test",
-    "testbed": "cd testing && gulp"
+    "testbed": "cd testing && gulp",
+    "bb": "cd building-blocks && gulp"
   },
   "dependencies": {
     "jquery": "^2.1.0"
