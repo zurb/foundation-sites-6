@@ -348,8 +348,10 @@
     //if the modal changed size, reset it
     if(this.changedSize){
       this.$element.css({
-        'height': this.options.height,
-        'width': this.options.width
+        'height': '',
+        'width': ''
+        // 'height': this.options.height,
+        // 'width': this.options.width
       });
     }
 
@@ -378,10 +380,10 @@
    */
   Reveal.prototype.destroy = function() {
     if(this.options.overlay){
-      this.$overlay.hide().off();
+      this.$overlay.off().remove();
     }
-    this.$element.hide();
-    this.$anchor.off();
+    this.$element.remove();
+    this.$anchor.off('click.zf.trigger');
 
     /**
      * Fires when the plugin has been destroyed.
