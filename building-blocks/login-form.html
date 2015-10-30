@@ -8,39 +8,31 @@
     <meta class="foundation-mq">
     <title>Foundation for Sites 6.0.0</title>
     <link href="css/app.css" rel="stylesheet" />
-    <style>
-      .border {
-        border-right: 1px solid #eee;
-      }
-    </style>
     <!-- <link rel="stylesheet" href="../node_modules/motion-ui/dist/motion-ui.css" /> -->
     <!-- uncomment this line ^ to use the motion-ui library -->
   </head>
   <body>
 
-    <div class="column row text-center">
-
-      <h1>Foundation for Sites 6</h1>
-      <h2 class="subheader"><small>BUILDING BLOCKS</small></h2>
-      <hr>
-      <p class="lead">Stage your Building Block links here:</p>
-    </div>
-
     <div class="row">
-      <div class="medium-4 columns border">
-        <ul class="no-bullet">
-          <li><a href="form.html">Signup Form - Tim</a></li>
-          <li><a href="form.html">Orbit with quotes only - Tim</a></li>
-          <li><a href="login-form.html">Login Form - Rafi</a></li>
-          <li><a href="circle-pagination.html">Circular Pagination - Rafi</a></li>
-        </ul>
-      </div>
-      <div class="medium-4 columns border">
+      <div class="medium-6 medium-centered large-4 large-centered columns">
         
+        <form>
+          <div class="row column log-in-form">
+            <h4 class="text-center">Log in with you email account</h4>
+            <label>Email
+              <input type="text" placeholder="somebody@example.com">
+            </label>
+            <label>Password
+              <input type="text" placeholder="Password">
+            </label>
+            <input id="show-password" type="checkbox"><label for="show-password">Show password</label>
+            <p><a type="submit" class="button expanded">Log In</a></p>
+            <p class="text-center"><a href="#">Forgot your password?</a></p>   
+          </div>
+        </form>
+
       </div>
-      <div class="medium-4 columns">
-        
-      </div>
+
     </div>
 
     <script src="js/app.js"></script>

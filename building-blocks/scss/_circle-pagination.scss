@@ -1,0 +1,21 @@
+// Color used for medium gray UI items within Foundation.
+$medium-gray: #cacaca !default;
+
+
+// changes the fonts size and circle size
+$pagination-font-size: rem-calc(18);
+
+// changes roundness based on font size
+$pagination-item-padding: rem-calc(6 15);
+
+//Need to import after declaring variables.
+@include foundation-everything;
+
+.pagination li {
+  border: 1px solid $medium-gray;
+  border-radius: 50%;
+}
+
+.pagination a {
+  border-radius: 50%;
+}
