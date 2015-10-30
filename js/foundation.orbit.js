@@ -50,7 +50,8 @@
     }
   };
   Orbit.prototype.loadBullets = function(){
-    this.$bullets = this.$element.find('.orbit-bullets > button');
+    // this.$bullets = this.$element.find('.orbit-bullets > button');
+    this.$bullets = this.$element.find('.orbit-bullets').find('[data-slide]');
   };
   Orbit.prototype.geoSync = function(){
     var _this = this;
@@ -221,7 +222,7 @@
     }
   };
   Orbit.prototype._updateBullets = function(idx){
-    var $oldBullet = this.$element.find('.orbit-bullets > .is-active').removeClass('is-active').blur(),
+    var $oldBullet = this.$element.find('.orbit-bullets').find('.is-active').removeClass('is-active').blur(),
         span = $oldBullet.find('span:last').detach(),
         $newBullet = this.$bullets.eq(idx).addClass('is-active').append(span);
   };
