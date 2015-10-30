@@ -21,7 +21,7 @@
   position: absolute;
   left: 0;
   width: auto;
-  transition: transform .5s ease;
+  transition: transform .35s ease-in-out;
   transform: scale(0.6) translate(0px, -30%);
 }
 .is-stacked .column:first-child {
@@ -41,7 +41,7 @@
 
 
 .slideInDown.mui-enter, .slideInLeft.mui-enter, .slideInUp.mui-enter, .slideInRight.mui-enter, .slideOutDown.mui-leave, .slideOutRight.mui-leave, .slideOutUp.mui-leave, .slideOutLeft.mui-leave, .fadeIn.mui-enter, .fadeOut.mui-leave, .hingeInFromTop.mui-enter, .hingeInFromRight.mui-enter, .hingeInFromBottom.mui-enter, .hingeInFromLeft.mui-enter, .hingeInFromMiddleX.mui-enter, .hingeInFromMiddleY.mui-enter, .hingeOutFromTop.mui-leave, .hingeOutFromRight.mui-leave, .hingeOutFromBottom.mui-leave, .hingeOutFromLeft.mui-leave, .hingeOutFromMiddleX.mui-leave, .hingeOutFromMiddleY.mui-leave, .scaleInUp.mui-enter, .scaleInDown.mui-enter, .scaleOutUp.mui-leave, .scaleOutDown.mui-leave, .spinIn.mui-enter, .spinOut.mui-leave, .spinInCCW.mui-enter, .spinOutCCW.mui-leave {
-  transition-duration: 500ms;
+  transition-duration: 350ms;
   transition-timing-function: linear; }
 
 .slideInDown.mui-enter {
