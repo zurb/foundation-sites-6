@@ -1,4 +1,22 @@
-$orbit-bullet-diameter: 4rem;
+$orbit-bullet-diameter: auto;
 
 //Need to import after declaring variables.
 @include foundation-everything;
+
+.orbit-slide {
+  height: 600px;
+  img {
+    width: 100%;
+    height: auto;
+  }
+}
+
+.orbit-bullets {
+  margin-top: 0 !important;
+  background: none;
+  .is-active {
+    img {
+      border: 5px solid $primary-color;
+    }
+  }
+}
