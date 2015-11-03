@@ -8,10 +8,6 @@
     <meta class="foundation-mq">
     <title>Foundation for Sites 6.0.0</title>
     <link href="css/app.css" rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/foundicons/3.0.0/foundation-icons.css" rel="stylesheet" >
-    <script type="text/javascript" src="js/app.js"></script>
-    <!-- <link rel="stylesheet" href="../node_modules/motion-ui/dist/motion-ui.css" /> -->
-    <!-- uncomment this line ^ to use the motion-ui library -->
   </head>
   <body>
       <div class="row column medium-6 large-4">
@@ -22,15 +18,35 @@
         <div class="tabs-content" data-tabs-content="example-tabs">
           <div class="tabs-panel is-active" id="panel1">
             <input type="text" placeholder="Username">
-            <input type="text" placeholder="Email Address">
             <input type="text" placeholder="Password">
-            <input type="text" placeholder="Confirm Password">
-            <button class="button expanded">Register Now</button>
+            <button class="button expanded">Sign In</button>
           </div>
           <div class="tabs-panel" id="panel2">
-            <p>Vivamus hendrerit arcu sed erat molestie vehicula. Sed auctor neque eu tellus rhoncus ut eleifend nibh porttitor. Ut in nulla enim. Phasellus molestie magna non est bibendum non venenatis nisl tempor. Suspendisse dictum feugiat nisl ut dapibus.</p> dcd
+            <p>Register for our amazing app.</p>
+            <form data-abide>
+              <input type="text" placeholder="Username" required>
+              <span class="form-error">
+                Yo, you had better fill this out.
+              </span>
+              <input type="text" placeholder="Email Address" required>
+              <span class="form-error">
+                Yo, you had better fill this out.
+              </span>
+              <input type="text" placeholder="Password" required>
+              <span class="form-error">
+                Yo, you had better fill this out.
+              </span>
+              <input type="text" placeholder="Confirm Password" required>
+              <span class="form-error">
+                Yo, you had better fill this out.
+              </span>
+              <button class="button expanded" type="submit" value="Submit">Register Now</button>
+            </form>
           </div>
         </div>
       </div>
+    <script src="js/app.js"></script>
+    <!-- <script src='../node_modules/motion-ui/dist/motion-ui.js'></script> -->
+    <!-- uncomment this line ^ to use the motion-ui library -->
   </body>
 </html>
