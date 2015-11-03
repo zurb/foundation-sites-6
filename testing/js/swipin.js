@@ -109,8 +109,8 @@
    */
   Swipin.prototype._events = function(){
     var _this = this;
-    $(window).on('changed.zf.mediaquery', function(e, newSize, oldSize){
-               _this._handleMQChange(newSize, oldSize);
+    $(window).on('changed.zf.mediaquery', function(e){
+               _this._handleMQChange();
              });
 
     if(this.stacked){
