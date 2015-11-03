@@ -22,7 +22,7 @@
   $margin: auto;
 
   @if map-get($behavior, nest) {
-    $margin: rem-calc($grid-column-gutter) / 2 * -1;
+    @include -zf-responsive-nest;
   }
   @else {
     max-width: $width;
@@ -32,9 +32,6 @@
     display: flex;
     flex-flow: row wrap;
   }
-
-  margin-left: $margin;
-  margin-right: $margin;
 
   @if $columns != null {
     @include grid-context($columns, $root) {
@@ -67,11 +64,8 @@
   $columns: null,
   $gutter: $grid-column-gutter
 ) {
-  $gutter: rem-calc($gutter) / 2;
-
+  @include -zf-responsive-gutter;
   flex: flex-grid-column($columns);
-  padding-left: $gutter;
-  padding-right: $gutter;
 
   // max-width fixes IE 10/11 not respecting the flex-basis property
   @if $columns != null and $columns != shrink {

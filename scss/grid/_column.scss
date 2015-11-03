@@ -52,7 +52,7 @@
 /// Creates a grid column.
 ///
 /// @param {Mixed} $columns [$grid-column-count] - Width of the column. Refer to the `grid-column()` function to see possible values.
-/// @param {Number} $gutter [$grid-column-gutter] - Spacing between columns.
+/// @param {Number} $gutter [auto] - Spacing between columns. Use `auto` to create responsive gutters.
 @mixin grid-column(
   $columns: $grid-column-count,
   $gutter: $grid-column-gutter
@@ -61,11 +61,16 @@
     @include grid-column-size($columns);
   }
 
-  $gutter: rem-calc($gutter) / 2;
+  @if $gutter == auto {
+    @include -zf-responsive-gutter;
+  }
+  @else {
+    $padding: rem-calc($gutter) / 2;
+    padding-left: $padding;
+    padding-right: $padding;
+  }
 
   float: $global-left;
-  padding-left: $gutter;
-  padding-right: $gutter;
 
   &:last-child {
     float: right;
@@ -73,7 +78,7 @@
 }
 
 /// Creates a grid column row. This is the equivalent of adding `.row` and `.column` to the same element.
-/// @param {Number} $gutter [$grid-column-gutter] - Width of the gutters on either side of the column row.
+/// @param {Number} $gutter [auto] - Width of the gutters on either side of the column row. Use `auto` to create responsive gutters.
 @mixin grid-column-row(
   $gutter: $grid-column-gutter
 ) {

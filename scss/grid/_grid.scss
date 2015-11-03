@@ -16,7 +16,32 @@ $grid-column-count: 12 !default;
 
 /// The amount of space between columns.
 /// @type Number
-$grid-column-gutter: 30px;
+$grid-column-gutter: (
+  small: 20px,
+  medium: 30px,
+);
+
+@mixin -zf-responsive-gutter {
+  @each $size, $gutter in $grid-column-gutter {
+    $padding: rem-calc($gutter) / 2;
+
+    @include breakpoint($size) {
+      padding-left: $padding;
+      padding-right: $padding;
+    }
+  }
+}
+
+@mixin -zf-responsive-nest {
+  @each $size, $gutter in $grid-column-gutter {
+    $margin: rem-calc($gutter) / 2 * -1;
+
+    @include breakpoint($size) {
+      margin-left: $margin;
+      margin-right: $margin;
+    }
+  }
+}
 
 @import 'row';
 @import 'column';

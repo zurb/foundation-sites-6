@@ -47,11 +47,7 @@
   $margin: auto;
 
   @if map-get($behavior, nest) {
-    $margin: rem-calc($grid-column-gutter) / 2 * -1;
-
-    @if map-get($behavior, collapse) {
-      $margin: 0;
-    }
+    @include -zf-responsive-nest;
   }
   @else {
     max-width: $width;
@@ -60,9 +56,6 @@
   @if $cf {
     @include clearfix;
   }
-
-  margin-left: $margin;
-  margin-right: $margin;
 
   @if $columns != null {
     @include grid-context($columns) {
