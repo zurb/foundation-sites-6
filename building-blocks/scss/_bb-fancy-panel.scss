@@ -1,0 +1,38 @@
+//Need to import after declaring variables.
+@include foundation-everything;
+
+.panel-section {
+  padding: 1rem;
+  position: relative;
+  border: 1px solid $medium-gray;
+}
+
+.first-section,
+.last-section {
+  background-color: $light-gray;
+  p {
+    @include v-align-middle;
+  }
+}
+
+.first-section {
+  border-bottom: 0;
+}
+
+.last-section {
+  border-top: 0;
+}
+
+@include breakpoint(medium) {
+  .panel-section {
+    border: 1px solid $medium-gray;
+  }
+  
+  .first-section {
+    border-right: none;
+  }
+  
+  .last-section {
+    border-left: none;
+  }
+}
