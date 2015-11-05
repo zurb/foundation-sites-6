@@ -49,9 +49,30 @@
       'animation'       : 'animationend'
     }
 
+  },
+  touch: {
+
+    touchstart: {
+
+    }
   }
 
 }
+var endEvent = (function() {
+  var transitions = {
+    'transition': 'transitionend',
+    'WebkitTransition': 'webkitTransitionEnd',
+    'MozTransition': 'transitionend',
+    'OTransition': 'otransitionend'
+  };
+  var elem = document.createElement('div');
+
+  for (var t in transitions){
+    if (typeof elem.style[t] !== 'undefined'){
+      return transitions[t];
+    }
+  }
+})();
   var prefix = (function () {
   var styles = window.getComputedStyle(document.documentElement, ''),
     pre = (Array.prototype.slice
@@ -67,6 +88,7 @@
     js: pre[0].toUpperCase() + pre.substr(1)
   };
 })();
+var something = navigator.userAgent;
 Foundation.prefix = prefix;
-console.log(prefix);
+console.log(navigator.userAgent, navigator.appVersion);
 }(jQuery, window.Foundation);
