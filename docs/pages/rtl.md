@@ -20,7 +20,6 @@ You'll need to change your lang attribute value to match your language. Here's a
 - **Chinese:** `zh`
 - **Farsi:** `fa`
 - **Hebrew:** `he`, `iw`
-- **Japanese:** `ja`
 - **Urdu:** `ur`
 - **Yiddish:** `yi`, `ji`
 
