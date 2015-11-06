@@ -20,7 +20,7 @@ Add the `.sticky` class and `[data-sticky]` to an element to create something th
 ```html
 <div class="columns small-6 right" data-sticky-container>
   <div class="sticky" data-sticky>
-    <img src="/assets/img/interchange/small.jpg">
+    <img src="assets/img/interchange/small.jpg">
   </div>
 </div>
 ```
@@ -44,7 +44,7 @@ Add the `.sticky` class and `[data-sticky]` to an element to create something th
     </div>
     <div class="columns small-6 right" data-sticky-container>
       <div class="sticky" data-sticky data-stick-at="#example1">
-        <img src="/assets/img/interchange/small.jpg">
+        <img src="assets/img/interchange/small.jpg">
       </div>
     </div>
   </div>
@@ -73,7 +73,7 @@ You can also choose the sticking point, top, bottom, or both. Elements with `[da
     </div>
     <div class='columns small-6 right' data-sticky-container>
       <div class="sticky" data-sticky data-stick-at='#example2' data-stick-to="bottom">
-        <img src='/assets/img/interchange/small.jpg'>
+        <img src='assets/img/interchange/small.jpg'>
       </div>
     </div>
   </div>
