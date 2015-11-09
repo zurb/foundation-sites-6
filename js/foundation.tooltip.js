@@ -22,7 +22,7 @@
     this.isClick = false;
     this._init();
 
-    Foundation.registerPlugin(this);
+    // Foundation.registerPlugin(this);
 
     // /**
     //  * Fires when the plugin has been successfully initialized
@@ -356,5 +356,5 @@
    * TODO utilize resize event trigger
    */
 
-  Foundation.plugin(Tooltip);
+  // Foundation.plugin(Tooltip);
 }(jQuery, window.document, window.Foundation);

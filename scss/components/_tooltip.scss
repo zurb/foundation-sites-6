@@ -57,10 +57,25 @@ $tooltip-radius: $global-radius !default;
   position: absolute;
   z-index: 10;
   top: calc(100% + #{$tooltip-pip-height});
-  max-width: 10rem !important;
+  max-width: 15rem !important;
+  white-space: normal;
+  // width: auto;
+  // height: auto;
   border-radius: $tooltip-radius;
+  // transition: opacity .2s linear;
+  display: none;
+
+
+  // opacity: 0;
   // visibility: hidden;
 
+  &[aria-hidden='false'] {
+    // opacity: 1;
+    display: block;
+    // left: -50%
+    // margin-left: -50%;
+    // margin-right: -50%;
+  }
   &::before {
     @include css-triangle($tooltip-pip-width, $tooltip-background-color, up);
     bottom: 100%;
@@ -69,7 +84,8 @@ $tooltip-radius: $global-radius !default;
     transform: translateX(-50%);
   }
 
-  &.top {
+  &.is-top {
+    transform: translateY(calc(-100% - #{$tooltip-pip-height}));
     &::before {
       @include css-triangle($tooltip-pip-width, $tooltip-background-color, down);
       top: 100%;
@@ -77,7 +93,10 @@ $tooltip-radius: $global-radius !default;
     }
   }
 
-  &.left {
+  &.is-left {
+    top: 0;
+    transform: translateX(- #{$tooltip-pip-width});
+
     &::before {
       @include css-triangle($tooltip-pip-width, $tooltip-background-color, right);
       bottom: auto;
@@ -87,7 +106,10 @@ $tooltip-radius: $global-radius !default;
     }
   }
 
-  &.right {
+  &.is-right {
+    top: 0;
+    transform: translateX(#{$tooltip-pip-width});
+
     &::before {
       @include css-triangle($tooltip-pip-width, $tooltip-background-color, left);
       bottom: auto;

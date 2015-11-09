@@ -10,7 +10,7 @@
       return false;
     }
     this.do = function(ts){//timestamp returned from requestAnimationFrame
-      if(!ts){ start = ts = window.performance.now(); }
+      if(!ts || !start){ start = ts = window.performance.now(); }
       prog = ts - start;
       fn.apply(elem);//call the cb
       if(prog < duration){
@@ -20,7 +20,7 @@
         elem.trigger('finished.zf.animate', [elem]);
       }
     };
-    // window.requestAnimationFrame(this.do);
+    window.requestAnimationFrame(this.do);
   }
   Foundation.Move = Move;
 }(jQuery, window.Foundation, window);

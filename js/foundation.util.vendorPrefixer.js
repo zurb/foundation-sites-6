@@ -90,5 +90,5 @@ var endEvent = (function() {
 })();
 var something = navigator.userAgent;
 Foundation.prefix = prefix;
-console.log(navigator.userAgent, navigator.appVersion);
+// console.log(navigator.userAgent, navigator.appVersion);
 }(jQuery, window.Foundation);
