@@ -25,9 +25,7 @@ foundation new
 
 ## CSS Download
 
-If you aren't into Sass, we have a starter template with compiled CSS and JavaScript, as well as a starting `index.html` file for you to hack on. Just unzip and get coding!
-
-<a href="#" class="large button">Download CSS Version</a>
+During the public release there is no CSS availible at the moment.
 
 ---
 
