@@ -64,11 +64,22 @@
     }
     if(!Foundation.ImNotTouchingYou(_this.$tip)){
       //change classes
-      // this.changePos();
+      this.changePos(this.getPositionClass(this.$tip));
       console.log('touching');
     }
     this.$tip.hide().css('visibility', '');
     if(cb){ cb(); }
+  };
+  Tooltip.prototype.changePos = function(cls){
+    if(!cls){
+      this.$tip.addClass('is-top');
+    }else{
+      if(cls === 'is-top'){
+        this.$tip.removeClass('is-top');
+      }
+    }
+    this.changed = true;
+    this.checkPos(true);
   };
   Tooltip.prototype.setPosition = function(cb){
     var tipDims = this.$tip[0].getBoundingClientRect(),
@@ -87,6 +98,10 @@
           'is-btm': function(){
             css['margin-left'] = -(w / 2) - parseInt(comp['margin-left'], 10);
             css['margin-right'] = -(w / 2) - parseInt(comp['margin-right'], 10);
+            // css['top'] = '';
+            // css['left'] = '';
+            // css['right'] = '';
+
             // css['left'] = -css['margin-left'] / 2;
             // css['right'] = -css['margin-right'] / 2;
           },
@@ -153,6 +168,10 @@
 
   };
   Tooltip.prototype.close = function(){
+    if(this.changed){
+      this.$tip.removeClass(this.getPositionClass(this.$tip))
+          .addClass(this.options.positionClass);
+    }
     this.$tip.attr('aria-hidden', true).data('open', false)
         .fadeOut(this.options.fadeOutDuration);
   };
