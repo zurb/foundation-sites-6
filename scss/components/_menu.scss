@@ -33,6 +33,7 @@ $menu-expand-max: 6 !default;
 
   // List items are table cell to allow for vertical alignment
   > li {
+    @include disable-mouse-outline;
     display: table-cell;
     vertical-align: middle;
   }
@@ -143,9 +144,9 @@ $menu-expand-max: 6 !default;
   font-weight: bold;
   color: inherit;
   line-height: 1;
-  padding: $menu-item-padding;
   padding-top: 0;
   padding-bottom: 0;
+  padding: $menu-item-padding;
 }
 
 @mixin foundation-menu {
