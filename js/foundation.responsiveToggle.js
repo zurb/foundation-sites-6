@@ -1,3 +1,8 @@
+/**
+ * ResponsiveToggle module.
+ * @module foundation.responsiveToggle
+ * @requires foundation.util.mediaQuery
+ */
 !function($, Foundation) {
 
 'use strict';
@@ -16,11 +21,12 @@ function ResponsiveToggle(element, options) {
   this._init();
   this._events();
 
-  /**
-   * Fires when the plugin has been successfully initialized.
-   * @event ResponsiveToggle#init
-   */
-  this.$element.trigger('init.zf.ResponsiveToggle');
+  Foundation.registerPlugin(this);
+  // /**
+  //  * Fires when the plugin has been successfully initialized.
+  //  * @event ResponsiveToggle#init
+  //  */
+  // this.$element.trigger('init.zf.ResponsiveToggle');
 }
 
 ResponsiveToggle.defaults = {
@@ -40,7 +46,7 @@ ResponsiveToggle.defaults = {
 ResponsiveToggle.prototype._init = function() {
   var targetID = this.$element.data('responsive-toggle');
   if (!targetID) {
-    console.error('Your tab bar needs an ID of a menu bar as the value of data-tab-bar.');
+    console.error('Your tab bar needs an ID of a Menu as the value of data-tab-bar.');
   }
 
   this.$targetMenu = $('#'+targetID);
@@ -68,7 +74,6 @@ ResponsiveToggle.prototype._events = function() {
  * @private
  */
 ResponsiveToggle.prototype._update = function() {
-  debugger;
   // Mobile
   if (!Foundation.MediaQuery.atLeast(this.options.hideFor)) {
     this.$element.show();

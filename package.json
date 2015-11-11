@@ -1,6 +1,6 @@
 {
   "name": "foundation-sites",
-  "version": "6.0.0-alpha.1",
+  "version": "6.0.0-alpha.2",
   "main": "js/foundation/foundation.js",
   "scripts": {
     "start": "gulp",
@@ -8,7 +8,8 @@
     "testbed": "cd testing && gulp"
   },
   "dependencies": {
-    "jquery": "^2.1.0"
+    "jquery": "^2.1.0",
+    "what-input": "^1.1.2"
   },
   "devDependencies": {
     "bootcamp": "^1.1.7",
@@ -21,17 +22,21 @@
     "gulp-jshint": "^1.9.2",
     "gulp-load-plugins": "^0.8.0",
     "gulp-minify-css": "^1.2.1",
+    "gulp-plumber": "^1.0.1",
     "gulp-rename": "^1.2.2",
     "gulp-ruby-sass": "^1.0.0-alpha.3",
-    "gulp-sass": "^2.0.4",
+    "gulp-sass": "^2.1.0",
     "gulp-scss-lint": "^0.2.2",
     "gulp-uglify": "^1.1.0",
     "handlebars": "^3.0.1",
     "highlight.js": "^8.5.0",
     "marked": "^0.3.3",
-    "motion-ui": "^1.0.0",
+    "mocha": "^2.3.3",
+    "motion-ui": "^1.1.0",
     "multiline": "^1.0.2",
     "octophant": "^0.2.0",
+    "open": "0.0.5",
+    "opener": "^1.4.1",
     "panini": "0.1.0",
     "parker": "0.0.9",
     "pretty-print": "^1.0.0",
@@ -41,6 +46,7 @@
     "run-sequence": "^1.1.4",
     "string-template": "^0.2.1",
     "supercollider": "^1.0.0",
+    "typeahead.js": "^0.11.1",
     "zeroclipboard": "^2.2.0"
   },
   "repository": {
@@ -56,6 +62,5 @@
       "type": "MIT",
       "url": "https://github.com/zurb/foundation/blob/master/LICENSE"
     }
-  ],
-  "private": true
+  ]
 }

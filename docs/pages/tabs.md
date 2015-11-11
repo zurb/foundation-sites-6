@@ -52,21 +52,27 @@ Put it all together, and we get this:
 
 <div class="tabs-content" data-tabs-content="example-tabs">
   <div class="tabs-panel is-active" id="panel1">
+    <p>one</p>
     <p>Check me out! I'm a super cool Tab panel with text content!</p>
   </div>
   <div class="tabs-panel" id="panel2">
+    <p>two</p>
     <img src="http://placehold.it/350x150">
   </div>
   <div class="tabs-panel" id="panel3">
+    <p>three</p>
     <p>Check me out! I'm a super cool Tab panel with text content!</p>
   </div>
   <div class="tabs-panel" id="panel4">
+    <p>four</p>
     <img src="http://placehold.it/350x150">
   </div>
   <div class="tabs-panel" id="panel5">
+    <p>five</p>
     <p>Check me out! I'm a super cool Tab panel with text content!</p>
   </div>
   <div class="tabs-panel" id="panel6">
+    <p>six</p>
     <img src="http://placehold.it/350x150">
   </div>
 </div>

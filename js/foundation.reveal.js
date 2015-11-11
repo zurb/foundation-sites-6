@@ -1,3 +1,11 @@
+/**
+ * Reveal module.
+ * @module foundation.reveal
+ * @requires foundation.util.keyboard
+ * @requires foundation.util.size-and-collision
+ * @requires foundation.util.triggers
+ * @requires foundation.util.mediaQuery
+ */
 !function(Foundation, $) {
   'use strict';
 
@@ -5,19 +13,28 @@
    * Creates a new instance of Reveal.
    * @class
    * @fires Reveal#init
-   * @param {Object} element - jQuery object to use for the modal.
+   * @param {jQuery} element - jQuery object to use for the modal.
+   * @param {Object} options - optional parameters.
    */
 
-  function Reveal(element) {
+  function Reveal(element, options) {
     this.$element = element;
-    this.options = $.extend({}, Reveal.defaults, this.$element.data());
+    this.options = $.extend({}, Reveal.defaults, this.$element.data(), options);
     this._init();
 
-    /**
-     * Fires when the plugin has been successfuly initialized.
-     * @event Reveal#init
-     */
-    this.$element.trigger('init.zf.reveal');
+    Foundation.registerPlugin(this);
+    Foundation.Keyboard.register('Reveal', {
+      'ENTER': 'open',
+      'SPACE': 'open',
+      'ESCAPE': 'close',
+      'TAB': 'tab_forward',
+      'SHIFT_TAB': 'tab_backward'
+    });
+    // /**
+    //  * Fires when the plugin has been successfuly initialized.
+    //  * @event Reveal#init
+    //  */
+    // this.$element.trigger('init.zf.reveal');
   }
 
   Reveal.defaults = {
@@ -27,13 +44,12 @@
     hideDelay: 0,
     closeOnClick: true,
     closeOnEsc: true,
-    multiOpened: false,
+    multipleOpened: false,
     vOffset: 100,
     hOffset: 0,
     fullScreen: false,
     btmOffsetPct: 10,
-    overlay: true,
-    keyboardAccess: true
+    overlay: true
   };
 
   /**
@@ -41,20 +57,26 @@
    * @private
    */
   Reveal.prototype._init = function(){
-    var anchorId = Foundation.GetYoDigits(6, 'reveal');
-
     this.id = this.$element.attr('id');
+    this.isActive = false;
 
     this.$anchor = $('[data-open="' + this.id + '"]').length ? $('[data-open="' + this.id + '"]') : $('[data-toggle="' + this.id + '"]');
-    this.$anchor.attr({
-      // 'data-close': this.id,
-      'aria-controls': this.id,
-      'id': anchorId,
-      'aria-haspopup': true,
-      'tabindex': this.options.keyboardAccess ? 0 : -1
-    });
-    this.options.fullScreen = this.$element.hasClass('full');
-    if(this.options.fullScreen){
+
+    if(this.$anchor.length){
+      var anchorId = this.$anchor[0].id || Foundation.GetYoDigits(6, 'reveal');
+
+      this.$anchor.attr({
+        'aria-controls': this.id,
+        'id': anchorId,
+        'aria-haspopup': true,
+        'tabindex': 0
+      });
+      this.$element.attr({'aria-labelledby': anchorId});
+    }
+
+    // this.options.fullScreen = this.$element.hasClass('full');
+    if(this.options.fullScreen || this.$element.hasClass('full')){
+      this.options.fullScreen = true;
       this.options.overlay = false;
     }
     if(this.options.overlay){
@@ -64,14 +86,9 @@
     this.$element.attr({
         'role': 'dialog',
         'aria-hidden': true,
-        'aria-labelledby': anchorId,
         'data-yeti-box': this.id,
         'data-resize': this.id
     });
-
-
-    this.options.height = this.$element.outerHeight();
-    this.options.width = this.$element.outerWidth();
 
     this._events();
   };
@@ -111,7 +128,7 @@
       }
     });
 
-    if(this.options.keyboardAccess){
+    if(this.$anchor.length){
       this.$anchor.on('keydown.zf.reveal', function(e){
         if(e.which === 13 || e.which === 32){
           e.stopPropagation();
@@ -121,8 +138,9 @@
       });
     }
 
+
     if(this.options.closeOnClick && this.options.overlay){
-      this.$overlay.on('click.zf.reveal', this._close.bind(this));
+      this.$overlay.off('.zf.reveal').on('click.zf.reveal', this._close.bind(this));
     }
   };
   /**
@@ -135,6 +153,7 @@
     var elePos = this.options.fullScreen ? 'reveal full' : (eleDims.height >= (0.5 * eleDims.windowDims.height)) ? 'reveal' : 'center';
 
     if(elePos === 'reveal full'){
+      console.log('full');
       //set to full height/width
       this.$element
           .offset(Foundation.GetOffsets(this.$element, null, elePos, this.options.vOffset))
@@ -142,7 +161,7 @@
             'height': eleDims.windowDims.height,
             'width': eleDims.windowDims.width
           });
-    }else if(!Foundation.MediaQuery.atLeast('medium')){
+    }else if(!Foundation.MediaQuery.atLeast('medium') || !Foundation.ImNotTouchingYou(this.$element, null, true, false)){
       //if smaller than medium, resize to 100% width minus any custom L/R margin
       this.$element
           .css({
@@ -153,11 +172,12 @@
       this.changedSize = true;
     }else{
       this.$element
-          .offset(Foundation.GetOffsets(this.$element, null, elePos, this.options.vOffset))
-          //the max height based on a percentage of vertical offset plus vertical offset
           .css({
-            'max-height': eleDims.windowDims.height - (this.options.vOffset * (this.options.btmOffsetPct / 100 + 1))
-          });
+            'max-height': eleDims.windowDims.height - (this.options.vOffset * (this.options.btmOffsetPct / 100 + 1)),
+            'width': ''
+          })
+          .offset(Foundation.GetOffsets(this.$element, null, elePos, this.options.vOffset));
+          //the max height based on a percentage of vertical offset plus vertical offset
     }
 
     cb();
@@ -180,7 +200,7 @@
     this._setPosition(function(){
       _this.$element.hide()
                    .css({'visibility': ''});
-      if(!_this.options.multiOpened){
+      if(!_this.options.multipleOpened){
         /**
          * Fires immediately before the modal opens.
          * Closes any other modals that are currently open
@@ -190,7 +210,7 @@
       }
       if(_this.options.animationIn){
         if(_this.options.overlay){
-          Foundation.Motion.animateIn(_this.$overlay, 'fadeIn', function(){
+          Foundation.Motion.animateIn(_this.$overlay, 'fade-in', function(){
             Foundation.Motion.animateIn(_this.$element, _this.options.animationIn, function(){
             });
           });
@@ -224,7 +244,7 @@
              .attr({'aria-hidden': (this.options.overlay || this.options.fullScreen) ? true : false});
     setTimeout(function(){
       _this._extraHandlers();
-      Foundation.reflow();
+      // Foundation.reflow();
     }, 0);
   };
 
@@ -234,34 +254,36 @@
    */
   Reveal.prototype._extraHandlers = function(){
     var _this = this;
-    if(!this.options.overlay && this.options.closeOnClick){
-      this.$element.on('click.zf.reveal', function(e){
-        // e.preventDefault();
-        return false;
-      });
+    var visibleFocusableElements = this.$element.find('a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, *[tabindex], *[contenteditable]').filter(function() {
+      if (!$(this).is(':visible') || $(this).attr('tabindex') < 0){ return false; }//only have visible elements and those that have a tabindex greater or equal 0
+      return true;
+    });
+
+    if(!this.options.overlay && this.options.closeOnClick && !this.options.fullScreen){
       $('body').on('click.zf.reveal', function(e){
+        // if()
           _this._close();
       });
     }
-    /*if(this.options.closeOnEsc){
-      $(window).on('keyup.zf.reveal', function(e){
-        e.preventDefault();
-        e.stopPropagation();
-        if(e.which === 27){
-          _this._close();
+    if(this.options.closeOnEsc){
+      $(window).on('keydown.zf.reveal', function(e){
+        if (visibleFocusableElements.length === 0) { // no focusable elements inside the modal at all, prevent tabbing in general
+          e.preventDefault();
         }
+        Foundation.Keyboard.handleKey(e, _this, {
+          close: function() {
+            if (this.options.closeOnEsc) {
+              this._close();
+            }
+          }
+        });
       });
-    }*/
+    }
 
     // lock focus within modal while tabbing
     this.$element.on('keydown.zf.reveal', function(e) {
-
-      var visibleFocusableElements = $(this).find('a[href], area[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), button:not([disabled]), iframe, object, embed, *[tabindex], *[contenteditable]').filter(function() {
-        if (!$(this).is(':visible') || $(this).attr('tabindex') < 0) return false; //only have visible elements and those that have a tabindex greater or equal 0
-        return true;
-      });
       // handle keyboard event with keyboard util
-      Foundation.handleKey(e, _this, {
+      Foundation.Keyboard.handleKey(e, _this, {
         tab_forward: function() {
           if (this.$element.find(':focus').is(visibleFocusableElements.eq(-1))) { // left modal downwards, setting focus to first element
             visibleFocusableElements.eq(0).focus();
@@ -286,29 +308,16 @@
       if (visibleFocusableElements.length === 0) { // no focusable elements inside the modal at all, prevent tabbing in general
         e.preventDefault();
       }
-
-      /*var keyCode = e.keyCode || e.which;
-      if (keyCode === 9) { // tab is pressed
-        if (e.shiftKey && ($(this).find(':focus').is(visibleFocusableElements.eq(0)) || $(this).is(':focus'))) { // left modal upwards, setting focus to last element
-          visibleFocusableElements.eq(-1).focus();
-          e.preventDefault();
-        } else if (!e.shiftKey && $(this).find(':focus').is(visibleFocusableElements.eq(-1))) { // left modal downwards, setting focus to first element
-          visibleFocusableElements.eq(0).focus();
-          e.preventDefault();
-        } else if (visibleFocusableElements.length === 0) { // no focusable elements inside the modal at all, prevent tabbing in general
-          e.preventDefault();
-        }
-      }*/
     });
 
   };
 
   /**
    * Closes the modal
-   * @fires Reveal#close
+   * @fires Reveal#closed
    */
   Reveal.prototype._close = function(){
-    if(!this.isActive){
+    if(!this.isActive || !this.$element.is(':visible')){
       return false;
     }
     var _this = this;
@@ -316,7 +325,7 @@
     if(this.options.animationOut){
       Foundation.Motion.animateOut(this.$element, this.options.animationOut, function(){
         if(_this.options.overlay){
-          Foundation.Motion.animateOut(_this.$overlay, 'fadeOut', function(){
+          Foundation.Motion.animateOut(_this.$overlay, 'fade-out', function(){
           });
         }
       });
@@ -330,7 +339,7 @@
     }
     //conditionals to remove extra event listeners added on open
     if(this.options.closeOnEsc){
-      $(window).off('keyup.zf.reveal');
+      $(window).off('keydown.zf.reveal');
     }
     if(!this.options.overlay && this.options.closeOnClick){
       $('body').off('click.zf.reveal');
@@ -340,20 +349,20 @@
     //if the modal changed size, reset it
     if(this.changedSize){
       this.$element.css({
-        'height': this.options.height,
-        'width': this.options.width
+        'height': '',
+        'width': ''
       });
     }
 
-    $('body').removeClass('is-reveal-open').attr({'aria-hidden': false});
+    $('body').removeClass('is-reveal-open').attr({'aria-hidden': false, 'tabindex': ''});
 
     this.isActive = false;
     this.$element.attr({'aria-hidden': true})
     /**
      * Fires when the modal is done closing.
-     * @event Reveal#close
+     * @event Reveal#closed
      */
-                 .trigger('close.zf.reveal');
+                 .trigger('closed.zf.reveal');
   };
 
   Reveal.prototype.toggle = function(){
@@ -375,12 +384,14 @@
     this.$element.hide();
     this.$anchor.off();
 
+    Foundation.unregisterPlugin(this);
+
     /**
      * Fires when the plugin has been destroyed.
      * @event Reveal#destroyed
      */
-    this.$element.trigger('destroyed.zf.reveal');
-  }
+    // this.$element.trigger('destroyed.zf.reveal');
+  };
 
   Foundation.plugin(Reveal);
 

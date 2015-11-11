@@ -2,8 +2,16 @@
 // foundation.zurb.com
 // Licensed under MIT Open Source
 
+////
+/// @group drilldown
+////
+
+/// Transition property to use for animating menus.
+/// @type Transition
+$drilldown-transition: transform 0.15s linear !default;
+
 @mixin foundation-drilldown-menu {
-  // Applied to the menu bar container
+  // Applied to the Menu container
   .is-drilldown {
     position: relative;
     overflow: hidden;
@@ -17,7 +25,7 @@
     z-index: -1;
     width: 100%;
     background: $white;
-    transition: transform 0.15s linear;
+    transition: $drilldown-transition;
 
     &.is-active {
       z-index: 1;

@@ -2,7 +2,8 @@
 
   /******************************************************************
   /** A very simple timer for animated elements within Foundation. **
-  /** Feel free to add features, comments, or use case examples.   **
+  /** Allows your script to pause and restart later with fn call.  **
+  /**  Feel free to add features, comments, or use case examples.  **
   /*****************************************************************/
 
   function Timer(elem, options, cb){
@@ -21,11 +22,13 @@
 
     this.start = function(){
       // if(!elem.data('paused')){ return false; }//maybe implement this sanity check if used for other things.
-      remain = remain < 0 ? duration : remain;
+      remain = remain <= 0 ? duration : remain;
       elem.data('paused', false);
       start = Date.now();
       timer = setTimeout(function(){
-        _this.restart();//rerun the timer.
+        if(options.infinite){
+          _this.restart();//rerun the timer.
+        }
         cb();
       }, remain);
       elem.trigger('timerstart.zf.' + nameSpace);

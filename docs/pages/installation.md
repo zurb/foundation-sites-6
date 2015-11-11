@@ -3,23 +3,23 @@ title: Installation
 description: There are many ways to install Foundation, but if you're just getting started, we have a few suggestions.
 ---
 
-## Yeti Launch
+## Command-Line Tool
 
-Yeti Launch is our Mac app for quickly spinning up blank projects for any of the three Foundation frameworks. If you're just getting started with Foundation, we recommend downloading Yeti Launch to get going right away.
-
-<a href="#" class="large button">Download Yeti Launch</a>
-
-### Command-Line Tool
-
-Not a fan of GUIs? The Node-powered Foundation CLI can install the same templae projects for you. Install it with npm:
-
-<div class="callout alert">
-  <p>As Foundation for Sites is in alpha, the CLI doesn't yet support this framework.</p>
-</div>
+The Node-powered Foundation CLI can install the same template projects for you. Install it with npm:
 
 ```bash
-npm install --global foundation-cli
+npm install --global foundation-cli@beta
 ```
+
+<div class="callout alert">
+  <p>Note that we're installing a <code>beta</code> version of the CLI in the above command.</p>
+</div>
+
+<div class="callout alert">
+  <p>If you already have the Foundation 5 CLI on your machine, you will only be able to access one of the commands, depending on how your command line environment is configured.</p>
+
+  <p>If you want to remove the old CLI, run <code>gem uninstall foundation</code>. After testing this new CLI, if you want to go back to the old CLI, run <code>npm uninstall foundation-cli --global</code>.</p>
+</div>
 
 Once you've installed the CLI, use the `new` command to start making a new project:
 

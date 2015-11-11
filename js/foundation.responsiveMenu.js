@@ -1,8 +1,17 @@
+/**
+ * ResponsiveMenu module.
+ * @module foundation.responsiveMenu
+ * @requires foundation.util.triggers
+ * @requires foundation.util.mediaQuery
+ * @requires foundation.util.accordionMenu
+ * @requires foundation.util.drilldown
+ * @requires foundation.util.dropdown-menu
+ */
 !function(Foundation, $) {
   'use strict';
 
   // The plugin matches the plugin classes with these plugin instances.
-  var menubarPlugins = {
+  var MenuPlugins = {
     dropdown: {
       cssClass: 'dropdown',
       plugin: Foundation._plugins['dropdown-menu'] || null
@@ -15,45 +24,46 @@
       cssClass: 'accordion-menu',
       plugin: Foundation._plugins['accordion-menu'] || null
     }
-  }
+  };
 
   // [PH] Media queries
   var phMedia = {
     small: '(min-width: 0px)',
     medium: '(min-width: 640px)'
-  }
+  };
 
   /**
    * Creates a new instance of a responsive menu.
    * @class
-   * @fires MenuBar#init
+   * @fires ResponsiveMenu#init
    * @param {jQuery} element - jQuery object to make into a dropdown menu.
    * @param {Object} options - Overrides to the default plugin settings.
    */
-  function MenuBar(element) {
+  function ResponsiveMenu(element) {
     this.$element = $(element);
-    this.rules = this.$element.data('menu-bar');
+    this.rules = this.$element.data('responsive-menu');
     this.currentMq = null;
     this.currentPlugin = null;
 
     this._init();
     this._events();
 
-    /**
-     * Fires when the plugin has been successfuly initialized.
-     * @event MenuBar#init
-     */
-     this.$element.trigger('init.zf.menubar');
+    Foundation.registerPlugin(this);
+    // /**
+    //  * Fires when the plugin has been successfuly initialized.
+    //  * @event ResponsiveMenu#init
+    //  */
+    //  this.$element.trigger('init.zf.ResponsiveMenu');
   }
 
-  MenuBar.defaults = {};
+  ResponsiveMenu.defaults = {};
 
   /**
-   * Initializes the menu bar by parsing the classes from the 'data-menubar' attribute on the element.
+   * Initializes the Menu by parsing the classes from the 'data-ResponsiveMenu' attribute on the element.
    * @function
    * @private
    */
-  MenuBar.prototype._init = function() {
+  ResponsiveMenu.prototype._init = function() {
     var rulesTree = {};
 
     // Parse rules from "classes" in data attribute
@@ -65,8 +75,8 @@
       var ruleSize = rule.length > 1 ? rule[0] : 'small';
       var rulePlugin = rule.length > 1 ? rule[1] : rule[0];
 
-      if (menubarPlugins[rulePlugin] !== null) {
-        rulesTree[ruleSize] = menubarPlugins[rulePlugin];
+      if (MenuPlugins[rulePlugin] !== null) {
+        rulesTree[ruleSize] = MenuPlugins[rulePlugin];
       }
     }
 
@@ -78,16 +88,19 @@
   };
 
   /**
-   * Initializes events for the menu bar.
+   * Initializes events for the Menu.
    * @function
    * @private
    */
-  MenuBar.prototype._events = function() {
+  ResponsiveMenu.prototype._events = function() {
     var _this = this;
 
-    $(window).on('resize.zf.menubar', function() {
+    $(window).on('changed.zf.mediaquery', function() {
       _this._checkMediaQueries();
     });
+    // $(window).on('resize.zf.ResponsiveMenu', function() {
+    //   _this._checkMediaQueries();
+    // });
   };
 
   /**
@@ -95,12 +108,11 @@
    * @function
    * @private
    */
-  MenuBar.prototype._checkMediaQueries = function() {
+  ResponsiveMenu.prototype._checkMediaQueries = function() {
     var matchedMq, _this = this;
-
     // Iterate through each rule and find the last matching rule
-    $.each(this.rules, function(key, value) {
-      if (window.matchMedia(phMedia[key]).matches && key !== _this.currentMq) {
+    $.each(this.rules, function(key) {
+      if (Foundation.MediaQuery.atLeast(key)) {
         matchedMq = key;
       }
     });
@@ -112,7 +124,7 @@
     if (this.currentPlugin instanceof this.rules[matchedMq].plugin) return;
 
     // Remove existing plugin-specific CSS classes
-    $.each(menubarPlugins, function(key, value) {
+    $.each(MenuPlugins, function(key, value) {
       _this.$element.removeClass(value.cssClass);
     });
 
@@ -122,17 +134,18 @@
     // Create an instance of the new plugin
     if (this.currentPlugin) this.currentPlugin.destroy();
     this.currentPlugin = new this.rules[matchedMq].plugin(this.$element, {});
-  }
+    console.log(this.currentPlugin);
+  };
 
   /**
    * Destroys the instance of the current plugin on this element, as well as the window resize handler that switches the plugins out.
    * @function
    */
-  MenuBar.prototype.destroy = function() {
+  ResponsiveMenu.prototype.destroy = function() {
     this.currentPlugin.destroy();
-    $(window).off('.zf.menubar');
-  }
-  // MenuBar.prototype.DropdownMenu = Foundation.DropdownMenu;
-  Foundation.plugin(MenuBar);
+    $(window).off('.zf.ResponsiveMenu');
+  };
+  // ResponsiveMenu.prototype.DropdownMenu = Foundation.DropdownMenu;
+  Foundation.plugin(ResponsiveMenu);
 
 }(Foundation, jQuery)
