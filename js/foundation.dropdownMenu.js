@@ -18,7 +18,7 @@
     this.$element = element;
     this.options = $.extend({}, DropdownMenu.defaults, this.$element.data(), options);
 
-    Foundation.FeatherNest(this.$element, 'dropdown');
+    Foundation.Nest.Feather(this.$element, 'dropdown');
 
     this._init();
 
@@ -354,25 +354,17 @@
    */
   DropdownMenu.prototype._hideSome = function($elems){
     if($elems.length){
-      // if($elems.hasClass('first-sub')){
-      //   console.log('true');
-      //   $elems.blur();
-      // }
       $elems.removeClass('is-active opens-inner').data('isClick', false)
-
             .find('.is-active').removeClass('is-active').data('isClick', false).end()
-
             .find('.js-dropdown-active').removeClass('js-dropdown-active')
                                         .attr('aria-hidden', true);
       $elems.parent('.has-submenu').removeClass('is-active');
+
       if(this.changed){
-        //remove position class
-        if(this.options.alignment === 'left'){
-          $elems.find('.opens-right').removeClass('opens-right').addClass('opens-left');
-        }else{
-          $elems.find('.opens-left').removeClass('opens-left').addClass('opens-right');
-        }
+        console.log(this.options.alignment);
+        changes[this.options.alignment]($elems);
       }
+      this.changed = false;
       /**
        * Fires when the open menus are closed.
        * @event DropdownMenu#hide
@@ -407,7 +399,7 @@
         .find('li')
         .removeClass('js-dropdown-nohover')
         .off('.zf.dropdownmenu');
-
+    Foundation.Nest.Burn(this.$element, 'dropdown');
     Foundation.unregisterPlugin(this);
   };
   Foundation.plugin(DropdownMenu);
@@ -415,5 +407,16 @@
   function checkClass($elem){
     return $elem.hasClass('is-active');
   }
+  var changes = {
+    left: function(elems){
+      this.both(elems, 'opens-left', 'opens-right');
+    },
+    right: function(elems){
+      this.both(elems, 'opens-right', 'opens-left');
+    },
+    both: function(elems, remove, add){
+      elems.find('.' + remove).removeClass(remove).addClass(add);
+    }
+  };
 
 }(Foundation, jQuery);

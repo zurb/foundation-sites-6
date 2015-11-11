@@ -144,8 +144,8 @@ OffCanvas.prototype.reveal = function(isRevealed){
  * @function
  * @fires OffCanvas#opened
  */
-OffCanvas.prototype.open = function(event, trigger) {
-  if (this.$element.hasClass('is-open')) {console.log('Im open!');return;}
+OffCanvas.prototype.open = function(event, trigger){
+  if(this.$element.hasClass('is-open')){ return; }
   var _this = this,
       $body = $(document.body);
 
@@ -201,7 +201,7 @@ OffCanvas.prototype.stick = function(){
  * @fires OffCanvas#closed
  */
 OffCanvas.prototype.close = function() {
-  if (!this.$element.hasClass('is-open')){console.log('Im not open!'); return;}
+  if(!this.$element.hasClass('is-open')){ return; }
 
   var _this = this;
 
@@ -246,8 +246,8 @@ OffCanvas.prototype.toggle = function(event, trigger) {
  * @function
  * @private
  */
-OffCanvas.prototype._handleKeyboard = function(event) {
-  if (event.which !== 27) return;
+OffCanvas.prototype._handleKeyboard = function(event){
+  if(event.which !== 27){ return; }
 
   event.stopPropagation();
   event.preventDefault();
