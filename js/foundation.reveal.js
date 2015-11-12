@@ -74,8 +74,9 @@
       this.$element.attr({'aria-labelledby': anchorId});
     }
 
-    this.options.fullScreen = this.$element.hasClass('full');
-    if(this.options.fullScreen){
+    // this.options.fullScreen = this.$element.hasClass('full');
+    if(this.options.fullScreen || this.$element.hasClass('full')){
+      this.options.fullScreen = true;
       this.options.overlay = false;
     }
     if(this.options.overlay){
@@ -88,10 +89,6 @@
         'data-yeti-box': this.id,
         'data-resize': this.id
     });
-
-
-    this.options.height = this.$element.outerHeight();
-    this.options.width = this.$element.outerWidth();
 
     this._events();
   };
@@ -156,6 +153,7 @@
     var elePos = this.options.fullScreen ? 'reveal full' : (eleDims.height >= (0.5 * eleDims.windowDims.height)) ? 'reveal' : 'center';
 
     if(elePos === 'reveal full'){
+      console.log('full');
       //set to full height/width
       this.$element
           .offset(Foundation.GetOffsets(this.$element, null, elePos, this.options.vOffset))
@@ -174,11 +172,12 @@
       this.changedSize = true;
     }else{
       this.$element
-          .offset(Foundation.GetOffsets(this.$element, null, elePos, this.options.vOffset))
-          //the max height based on a percentage of vertical offset plus vertical offset
           .css({
-            'max-height': eleDims.windowDims.height - (this.options.vOffset * (this.options.btmOffsetPct / 100 + 1))
-          });
+            'max-height': eleDims.windowDims.height - (this.options.vOffset * (this.options.btmOffsetPct / 100 + 1)),
+            'width': ''
+          })
+          .offset(Foundation.GetOffsets(this.$element, null, elePos, this.options.vOffset));
+          //the max height based on a percentage of vertical offset plus vertical offset
     }
 
     cb();
@@ -245,7 +244,7 @@
              .attr({'aria-hidden': (this.options.overlay || this.options.fullScreen) ? true : false});
     setTimeout(function(){
       _this._extraHandlers();
-      Foundation.reflow();
+      // Foundation.reflow();
     }, 0);
   };
 
@@ -260,8 +259,9 @@
       return true;
     });
 
-    if(!this.options.overlay && this.options.closeOnClick){
+    if(!this.options.overlay && this.options.closeOnClick && !this.options.fullScreen){
       $('body').on('click.zf.reveal', function(e){
+        // if()
           _this._close();
       });
     }
@@ -349,8 +349,8 @@
     //if the modal changed size, reset it
     if(this.changedSize){
       this.$element.css({
-        'height': this.options.height,
-        'width': this.options.width
+        'height': '',
+        'width': ''
       });
     }
 
@@ -391,7 +391,7 @@
      * @event Reveal#destroyed
      */
     // this.$element.trigger('destroyed.zf.reveal');
-  }
+  };
 
   Foundation.plugin(Reveal);
 

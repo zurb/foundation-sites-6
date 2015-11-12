@@ -8,10 +8,11 @@
         return true;
       }
       return false;
-    }
+    };
     this.do = function(ts){//timestamp returned from requestAnimationFrame
       if(!ts || !start){ start = ts = window.performance.now(); }
       prog = ts - start;
+      // console.log(prog, ts, start);
       fn.apply(elem);//call the cb
       if(prog < duration){
         anim = window.requestAnimationFrame(_this.do, elem);

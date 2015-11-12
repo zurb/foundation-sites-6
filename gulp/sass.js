@@ -6,6 +6,7 @@ var prettyJSON = require('prettyjson');
 var sass = require('gulp-sass');
 var autoprefixer = require('gulp-autoprefixer');
 var rename = require('gulp-rename');
+var plumber = require('gulp-plumber');
 
 var PATHS = [
   'scss',
@@ -24,11 +25,12 @@ gulp.task('sass', ['sass:foundation', 'sass:docs']);
 // Compiles Foundation Sass
 gulp.task('sass:foundation', function() {
   return gulp.src('./foundation-sites.scss')
+    .pipe(plumber())
     .pipe(sass({
       includePaths: PATHS
     }).on('error', sass.logError))
     .pipe(autoprefixer({
-      browsers: ['last 2 versions', 'ie >= 9']
+      browsers: COMPATIBILITY
     }))
     .pipe(rename('foundation.css'))
     .pipe(gulp.dest('_build/assets/css'));
