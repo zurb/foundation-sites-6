@@ -94,7 +94,7 @@
           $closeBtn = $(closeBtn).attr('data-close', id);
 
       $card.attr('data-open', id);
-      reveal.$element.append($closeBtn, '<img src="http://placehold.it/250x325"/>' + lorem);
+      reveal.$element.append($closeBtn, '<img src="' + imgSrc + '" style="max-width:250px;"/>' + lorem);
 
       _this.reveals.push(reveal);
       $modals = $modals.add(reveal.$element);
@@ -187,7 +187,7 @@
    */
   Swipin.prototype._pauseSwipe = function(){
     this.$cards.off('swipeleft.zf.swipin swiperight.zf.swipin');
-  }
+  };
   /**
    * Handles swipe event, and calls dismissCard
    * @private
