@@ -8,15 +8,26 @@
 
 /// Transition property to use for animating menus.
 /// @type Transition
-$drilldown-transition: transform 0.15s linear !default;
+$drilldown-transition: transform 1.5s linear !default;
+// $drilldown-transition: transform 0.15s linear !default;
 
 @mixin foundation-drilldown-menu {
   // Applied to the Menu container
   .is-drilldown {
     position: relative;
     overflow: hidden;
+    display: inline-block;
   }
-
+  .is-offscreen-left {
+    transition: $drilldown-transition;
+    transform: translateX(-100%);
+  }
+  .is-in {
+    transform: translateX(0);
+  }
+  .is-hidden {
+    display: none;
+  }
   // Applied to nested <ul>s
   .is-drilldown-sub {
     position: absolute;
@@ -26,6 +37,7 @@ $drilldown-transition: transform 0.15s linear !default;
     width: 100%;
     background: $white;
     transition: $drilldown-transition;
+    display: none;
 
     &.is-active {
       z-index: 1;
@@ -34,6 +46,7 @@ $drilldown-transition: transform 0.15s linear !default;
     }
 
     &.is-closing {
+      transition: $drilldown-transition;
       transform: translateX(100%);
     }
   }

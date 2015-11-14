@@ -195,6 +195,7 @@
    * @fires Drilldown#closed
    */
   Drilldown.prototype._hideAll = function(){
+    this.$element.find('.is-offscreen-left').removeClass('is-offscreen-left');
     this.$element.find('.is-drilldown-sub.is-active').addClass('is-closing')
         .on('transitionend.zf.drilldown', function(e){
           // console.log('transitionend');
@@ -244,7 +245,18 @@
    * @param {jQuery} $elem - the current element with a submenu to open.
    */
   Drilldown.prototype._show = function($elem){
-    $elem.children('[data-submenu]').addClass('is-active');
+    console.log($elem);
+    var sibs = $elem.siblings().not('[data-submenu]');
+    var toHide = $elem.children('a').add(sibs).removeClass('is-in').addClass('is-offscreen-left');
+    $elem.children('[data-submenu]').show(function(){
+
+      $elem.children('[data-submenu]').addClass('is-active');
+    }).end().one('transitionend.zf.drilldown:show', function(e){
+      // console.log('show',e);
+      // toHide.hide();
+      // toHide.addClass('is-hidden');
+    });
+
 
     this.$element.trigger('open.zf.drilldown', [$elem]);
   };
@@ -256,10 +268,19 @@
    */
   Drilldown.prototype._hide = function($elem){
     var _this = this;
+    console.log($elem);
+    var toShow = $elem.siblings('a').add($elem.parent().siblings());
+    toShow.removeClass('is-offscreen-left').addClass('is-in').show(function(){
+      toShow.addClass('is-closing');
+      $elem.one('transitionend.bullshit', function(e){
+        toShow.removeClass('is-closing');
+      });
+    });
     $elem.addClass('is-closing')
-      .on('transitionend.zf.drilldown', function(e){
-        // console.log('transitionend');
-        $(this).removeClass('is-active is-closing').off('transitionend.zf.drilldown');
+      .one('transitionend.zf.drilldown:hide', function(e){
+        // console.log('transitionend:hide');
+        toShow.removeClass('is-closing');
+        $(this).removeClass('is-active is-closing');
       });
     /**
      * Fires when the menu is fully closed.
@@ -276,7 +297,7 @@
    */
   Drilldown.prototype.getMaxHeight = function(){
     var max = 0, result = {};
-    this.$submenus.each(function(){
+    this.$submenus.add(this.$element).each(function(){
       var numOfElems = $(this).children('li').length;
       max = numOfElems > max ? numOfElems : max;
     });
