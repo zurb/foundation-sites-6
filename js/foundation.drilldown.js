@@ -247,14 +247,10 @@
   Drilldown.prototype._show = function($elem){
     console.log($elem);
     var sibs = $elem.siblings().not('[data-submenu]');
-    var toHide = $elem.children('a').add(sibs).removeClass('is-in').addClass('is-offscreen-left');
+    var toHide = $elem.children('a').add(sibs).css('visibility', 'hidden').removeClass('is-in').addClass('is-offscreen-left');
     $elem.children('[data-submenu]').show(function(){
 
       $elem.children('[data-submenu]').addClass('is-active');
-    }).end().one('transitionend.zf.drilldown:show', function(e){
-      // console.log('show',e);
-      // toHide.hide();
-      // toHide.addClass('is-hidden');
     });
 
 
@@ -269,17 +265,18 @@
   Drilldown.prototype._hide = function($elem){
     var _this = this;
     console.log($elem);
-    var toShow = $elem.siblings('a').add($elem.parent().siblings());
-    toShow.removeClass('is-offscreen-left').addClass('is-in').show(function(){
-      toShow.addClass('is-closing');
-      $elem.one('transitionend.bullshit', function(e){
-        toShow.removeClass('is-closing');
-      });
-    });
+    var toShow = $elem.siblings('a').add($elem.parent().siblings()).css('visibility', 'visible');
+    toShow.removeClass('is-offscreen-left').addClass('is-in')//.show(function(){
+    //   toShow.addClass('is-closing');
+    //   $elem.one('transitionend.bullshit', function(e){
+    //     toShow.removeClass('is-closing');
+    //   });
+    // });
     $elem.addClass('is-closing')
       .one('transitionend.zf.drilldown:hide', function(e){
         // console.log('transitionend:hide');
-        toShow.removeClass('is-closing');
+        $elem.hide();
+        // toShow.removeClass('is-closing');
         $(this).removeClass('is-active is-closing');
       });
     /**

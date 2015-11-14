@@ -40,6 +40,8 @@ $drilldown-transition: transform 1.5s linear !default;
     display: none;
 
     &.is-active {
+      position: absolute;
+      top: 0;
       z-index: 1;
       display: block;
       transform: translateX(-100%);
