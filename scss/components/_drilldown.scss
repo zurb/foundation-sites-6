@@ -15,21 +15,33 @@ $drilldown-transition: transform 1.5s linear !default;
   // Applied to the Menu container
   .is-drilldown {
     position: relative;
-    overflow: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
     display: inline-block;
+
   }
   .is-offscreen-left {
     transition: $drilldown-transition;
     transform: translateX(-100%);
   }
-  .is-in {
-    transform: translateX(0);
-  }
-  .is-hidden {
-    display: none;
-  }
+  // .is-in {
+  //   transform: translateX(0);
+  // }
+  // .is-hidden {
+  //   display: none;
+  // }
   // Applied to nested <ul>s
-  .is-drilldown-sub {
+  // .is-drilldown-wrapper {
+  //   position: absolute;
+  //   top: 0;
+  //   left: 100%;
+  //   z-index: -1;
+  //   width: 100%;
+  //   background: $white;
+  //   transition: $drilldown-transition;
+  //   // display: none;
+  // }
+  .is-drilldown-submenu {
     position: absolute;
     top: 0;
     left: 100%;
@@ -48,6 +60,7 @@ $drilldown-transition: transform 1.5s linear !default;
     }
 
     &.is-closing {
+      display: block;
       transition: $drilldown-transition;
       transform: translateX(100%);
     }

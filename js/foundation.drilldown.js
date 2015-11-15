@@ -319,7 +319,7 @@
 
     Foundation.unregisterPlugin(this);
   };
-  Foundation.plugin(Drilldown);
+  // Foundation.plugin(Drilldown);
 }(jQuery, window.Foundation);
 
 
