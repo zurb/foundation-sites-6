@@ -73,6 +73,7 @@ var Foundation = {
     delete this._activePlugins[plugin.uuid];
 
     plugin.$element.trigger('destroyed.zf.' + pluginName);
+    plugin.$element.removeAttr('data-' + pluginName);
 
     return;
   },
