@@ -18,7 +18,6 @@ $drilldown-transition: transform .15s linear !default;
     overflow-y: auto;
     overflow-x: hidden;
     display: inline-block;
-
   }
   &.is-offscreen-left {
     transform: translateX(-100%);
