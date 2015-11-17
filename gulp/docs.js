@@ -20,9 +20,7 @@ gulp.task('docs', function() {
 
   return gulp.src('docs/pages/**/*')
     .pipe(cached('docs'))
-    .pipe(mdFilter)
       .pipe(supercollider.init())
-    .pipe(mdFilter.restore())
     .pipe(panini({
       layouts: 'docs/layout/',
       partials: 'docs/partials/*.html'

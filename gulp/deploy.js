@@ -33,7 +33,6 @@ gulp.task('deploy:custom', ['sass:foundation', 'javascript:foundation'], functio
       .pipe(minifyCss())
       .pipe(rename('foundation.min.css'))
       .pipe(gulp.dest('./_build/assets/css'))
-    .pipe(cssFilter.restore())
     .pipe(jsFilter)
       .pipe(gulp.dest('./_build/assets/js'))
       .pipe(uglify())
