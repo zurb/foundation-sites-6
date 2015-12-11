@@ -35,17 +35,15 @@ npm start
   - `pages/*.md`: fancy documentation pages for components, which are parsed through [Supercollider](https://github.com/gakimball/supercollider).
   - `partials/`: Handlebars partials go here.
   - `assets/`: docs-specific images, styles, and scripts go here.
-- `js/`: the Foundation 5 JavaScript.
-  - New components are inside this folder.
-  - Old components are in `js/foundation/`.
+- `js/`: the JavaScript.
 - `scss/`: the Sass.
   - `scss/components`: new UI components go here.
-  - `scss/components_old`: Foundation 5 components stay here.
   - `scss/forms`: form styles.
   - `scss/grid`: the new grid.
   - `scss/typography`: typography.
   - `scss/util`: helper functions and mixins.
   - `scss/vendor`: third-party libraries.
   - `_global.scss`: global variables and styles.
-- `docs_old/`: Foundation 5 documentation.
-- `spec/`: Foundation 5 unit tests.
+- `test`: unit tests.
+  - `javascript`: JavaScript tests, powered by Mocha/Chai.
+  - `sass`: Sass tests, powered by Bootcamp.
